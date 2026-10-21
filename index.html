@@ -39,6 +39,13 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .mark span{display:block;background:currentColor;border-radius:2px}
 .flink{color:#5f6d66;text-decoration:none;font-size:14px}
 .flink:hover{color:#147d64}
+.cform label{display:block;margin:0 0 8px;font-size:14px;font-weight:600;color:#fff}
+.cform input,.cform textarea{width:100%;min-height:48px;padding:12px 16px;border:1px solid rgba(255,255,255,.35);border-radius:14px;background:#fff;color:#17231f;font:400 15px "DM Sans",sans-serif;outline:0}
+.cform textarea{min-height:110px;resize:vertical;border-radius:14px}
+.cform input:focus,.cform textarea:focus{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+.cform small{display:block;margin:7px 0 18px;color:rgba(255,255,255,.72);font-size:13px}
+.cform .status{min-height:20px;margin:0 0 12px;font-size:13px;font-weight:600}
+.cform button[disabled]{opacity:.7;cursor:wait}
 </style>
 </head>
 <body>
@@ -489,15 +496,27 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
       <h2 class="disp" style="margin: 0 0 16px; font-size: clamp(32px, 4vw, 50px); line-height: 1.1; font-weight: 800; letter-spacing: -1.6px;">Grow revenue. Build trust. Strengthen your school's reputation.</h2>
       <p style="margin: 0; color: rgba(255,255,255,.84); font-size: 17px; line-height: 1.65;">Let's map these two goals to your school.</p>
     </div>
-    <div style="flex: 0 1 380px; min-width: 0; padding: 24px; border-radius: 18px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.1);">
-      <span style="display: block; color: #c3eddd; font-size: 12px; font-weight: 700; letter-spacing: 1px;">TALK TO US</span>
-      <strong class="disp" style="display: block; margin: 8px 0 4px; font-size: 19px;">Rania Akhmalia</strong>
-      <a href="mailto:raniaakhmalia@gmail.com" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #fff; text-decoration: none;"><svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>raniaakhmalia@gmail.com</a>
-      <a href="https://wa.me/6285158611200" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #fff; text-decoration: none;"><svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>+62 851 5861 1200 (WhatsApp)</a>
-      <a class="btn btn-light" href="mailto:raniaakhmalia@gmail.com?subject=Classping%20demo" style="width: 100%; margin-top: 14px;">Book a demo
-        <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-      </a>
-    </div>
+    <form class="cform" data-contact-form data-lang-code="en" novalidate style="flex: 0 1 420px; min-width: 0; padding: 24px; border-radius: 18px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.1);">
+      <span style="display: block; margin-bottom: 16px; color: #c3eddd; font-size: 12px; font-weight: 700; letter-spacing: 1px;">TALK TO US</span>
+      <input type="hidden" name="_subject" value="Classping website: new message">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display: none;">
+      <label for="cname-en">Your name</label>
+      <input id="cname-en" name="name" type="text" autocomplete="name" required style="margin-bottom: 18px;">
+      <label for="cemail-en">Email</label>
+      <input id="cemail-en" name="email" type="email" autocomplete="email" required>
+      <small>This helps us reply to you by email.</small>
+      <label for="cmsg-en">Message</label>
+      <textarea id="cmsg-en" name="message" required></textarea>
+      <small>What would you like to discuss?</small>
+      <p class="status" role="status" aria-live="polite"></p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+        <a href="https://wa.me/6285158611200" style="color: #fff; font-size: 13px; text-decoration: none;">Prefer chat? WhatsApp us: <strong>+62 851 5861 1200</strong></a>
+        <button class="btn btn-light" type="submit" style="border: 0; cursor: pointer; font-family: inherit;">Submit
+          <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -959,15 +978,27 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
       <h2 class="disp" style="margin: 0 0 16px; font-size: clamp(32px, 4vw, 50px); line-height: 1.1; font-weight: 800; letter-spacing: -1.6px;">Tingkatkan pendapatan. Bangun kepercayaan. Perkuat reputasi sekolah Anda.</h2>
       <p style="margin: 0; color: rgba(255,255,255,.84); font-size: 17px; line-height: 1.65;">Mari petakan kedua tujuan ini untuk sekolah Anda.</p>
     </div>
-    <div style="flex: 0 1 380px; min-width: 0; padding: 24px; border-radius: 18px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.1);">
-      <span style="display: block; color: #c3eddd; font-size: 12px; font-weight: 700; letter-spacing: 1px;">HUBUNGI KAMI</span>
-      <strong class="disp" style="display: block; margin: 8px 0 4px; font-size: 19px;">Rania Akhmalia</strong>
-      <a href="mailto:raniaakhmalia@gmail.com" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #fff; text-decoration: none;"><svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>raniaakhmalia@gmail.com</a>
-      <a href="https://wa.me/6285158611200" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #fff; text-decoration: none;"><svg viewBox="0 0 24 24" style="width: 17px; height: 17px;" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>+62 851 5861 1200 (WhatsApp)</a>
-      <a class="btn btn-light" href="mailto:raniaakhmalia@gmail.com?subject=Demo%20Classping" style="width: 100%; margin-top: 14px;">Jadwalkan Demo
-        <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-      </a>
-    </div>
+    <form class="cform" data-contact-form data-lang-code="id" novalidate style="flex: 0 1 420px; min-width: 0; padding: 24px; border-radius: 18px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.1);">
+      <span style="display: block; margin-bottom: 16px; color: #c3eddd; font-size: 12px; font-weight: 700; letter-spacing: 1px;">HUBUNGI KAMI</span>
+      <input type="hidden" name="_subject" value="Website Classping: pesan baru">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display: none;">
+      <label for="cname-id">Nama Anda</label>
+      <input id="cname-id" name="name" type="text" autocomplete="name" required style="margin-bottom: 18px;">
+      <label for="cemail-id">Email</label>
+      <input id="cemail-id" name="email" type="email" autocomplete="email" required>
+      <small>Agar kami bisa membalas lewat email.</small>
+      <label for="cmsg-id">Pesan</label>
+      <textarea id="cmsg-id" name="message" required></textarea>
+      <small>Apa yang ingin Anda diskusikan?</small>
+      <p class="status" role="status" aria-live="polite"></p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+        <a href="https://wa.me/6285158611200" style="color: #fff; font-size: 13px; text-decoration: none;">Lebih suka chat? WhatsApp kami: <strong>+62 851 5861 1200</strong></a>
+        <button class="btn btn-light" type="submit" style="border: 0; cursor: pointer; font-family: inherit;">Kirim
+          <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -1007,6 +1038,32 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
   try { saved = localStorage.getItem(KEY); } catch (e) {}
   var urlLang = new URLSearchParams(location.search).get('lang');
   apply(urlLang === 'id' || urlLang === 'en' ? urlLang : (saved || 'id'));
+  var MSG = {
+    en: { sending: 'Sending…', ok: 'Thanks! Your message has been sent — we will reply by email.', fail: 'Sorry, the message could not be sent. Please try again or WhatsApp us.', invalid: 'Please fill in your name, a valid email, and a message.' },
+    id: { sending: 'Mengirim…', ok: 'Terima kasih! Pesan Anda sudah terkirim — kami akan membalas lewat email.', fail: 'Maaf, pesan gagal terkirim. Silakan coba lagi atau hubungi kami lewat WhatsApp.', invalid: 'Mohon isi nama, email yang valid, dan pesan.' }
+  };
+  document.addEventListener('submit', function (ev) {
+    var form = ev.target.closest('[data-contact-form]');
+    if (!form) return;
+    ev.preventDefault();
+    var t = MSG[form.getAttribute('data-lang-code')] || MSG.en;
+    var status = form.querySelector('.status');
+    var button = form.querySelector('button[type="submit"]');
+    if (!form.checkValidity()) { status.textContent = t.invalid; form.reportValidity(); return; }
+    var payload = {};
+    new FormData(form).forEach(function (value, key) { payload[key] = value; });
+    payload._replyto = payload.email;
+    status.textContent = t.sending;
+    button.disabled = true;
+    fetch('https://formsubmit.co/ajax/the.class.ping@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) { return res.ok ? res.json() : Promise.reject(res); })
+      .then(function () { status.textContent = t.ok; form.reset(); })
+      .catch(function () { status.textContent = t.fail; })
+      .then(function () { button.disabled = false; });
+  });
   document.addEventListener('click', function (ev) {
     var btn = ev.target.closest('[data-set-lang]');
     if (btn) { apply(btn.getAttribute('data-set-lang')); return; }
