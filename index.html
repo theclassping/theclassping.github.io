@@ -3,1457 +3,209 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Classping — Satu portal untuk semua urusan sekolah</title>
-<meta name="description" content="Classping membantu PAUD, TK dan Daycare mengelola administrasi dan aktivitas anak di satu tempat.">
-<meta property="og:title" content="Classping — Satu portal untuk semua urusan sekolah">
+<title>Classping — Urusan SPP dan kabar anak, beres sebelum jam pulang</title>
+<meta name="description" content="Classping merapikan tagihan SPP dan laporan kegiatan anak untuk PAUD, TK, dan Daycare. Orang tua cukup buka dari HP, tanpa pasang aplikasi.">
+<meta property="og:title" content="Classping — Urusan SPP dan kabar anak, beres sebelum jam pulang">
 <meta property="og:description" content="Kelola SPP dan bagikan aktivitas harian anak dalam satu portal untuk sekolah dan wali murid.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 110'%3E%3Cpath d='M8 44C8 20 24 8 55 8s47 12 47 36-16 36-47 36c-8 0-15-1-21-3L18 96l4-22C12 66 8 56 8 44Z' fill='%231FA78A'/%3E%3Cpath d='M38 48q17 16 34 0' stroke='%23FBF8F3' stroke-width='7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<style>
-:root{
-  --cream:#FBF8F3;--cream-2:#F3EEE6;--card:#FFFFFF;--line:#E5DED3;
-  --ink:#3A2F27;--ink-body:#5B4A3F;--muted:#6E5F53;
-  /* Final palette (moodboard "The Happy Bubble"): Hijau Classping #1FA78A for shapes and the logo, #00735F for text,
-     buttons and big fields; Kuning Matahari as the warm accent; peach and sky as soft accents. The "peony" and "mint"
-     token names are kept from the palette trials and now hold peach and sky. */
-  --green:#1FA78A;--green-strong:#00735F;--green-soft:#E3F1EE;--embun:#F3EEE6;
-  --peony:#FDE8D2;--peony-soft:#FDE8D2;--peony-deep:#F2A07E;--peony-ink:#8A3F22;
-  --sun:#F6B94A;--sun-soft:#FDF1D8;--mint:#A9C9D9;--mint-soft:#E4EFF4;
-  --success:#1E6B40;--success-soft:#E3F3E9;--warning:#8A5300;--info:#2F5E78;--info-soft:#E4EFF4;
-  --r-sm:8px;--r-md:12px;--r-lg:20px;--r-xl:28px;
-  --shadow:0 4px 16px rgba(58,47,39,.08);
-  --display:"Baloo 2",system-ui,sans-serif;--sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  /* Roles used by big green fields, buttons, logo and illustrations, so a whole palette can be swapped in one place */
-  --field:var(--green-strong);--field-2:var(--green);--field-tint:rgba(255,255,255,.1);
-  --on-field:#FFFFFF;--on-field-muted:rgba(255,255,255,.9);--on-field-line:rgba(255,255,255,.75);
-  --field-eyebrow:var(--sun-soft);--field-hi:var(--sun);
-  --btn:var(--green-strong);--on-btn:#FFFFFF;--btn-hover:#005F4F;
-  --mark:#1FA78A;--mark-smile:#FBF8F3;
-  --il-dark:#00735F;--il-mid:#1FA78A;--il-pink:#F2A07E;--il-pink-dark:#E08B6A;--il-sun:#F6B94A;
-}
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--cream);color:var(--ink-body);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
-img,svg{display:block}
-a{color:var(--green-strong)}
-h1,h2,h3,h4{margin:0;color:var(--ink);font-family:var(--display);font-weight:800;letter-spacing:-.01em;line-height:1.12}
-p{margin:0}
-:focus-visible{outline:2px solid var(--green-strong);outline-offset:2px}
-.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-strong)}
-.lead{font-size:18px;color:var(--ink-body);max-width:560px}
-.section{padding:96px 0}
-.section-head{max-width:640px;margin-bottom:40px;display:flex;flex-direction:column;gap:12px}
-.section-head h2{font-size:clamp(32px,4vw,44px)}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 
-/* Buttons */
-.btn{font:600 15px/1 var(--sans);min-height:48px;padding:0 22px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--card);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;transition:transform .18s ease-out,background .18s ease-out}
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--btn);border-color:var(--btn);color:var(--on-btn)}
-.btn-primary:hover{background:var(--btn-hover);border-color:var(--btn-hover)}
-.btn-sun{background:var(--sun);border-color:var(--sun);color:var(--ink)}
-.btn-ghost{background:transparent;border-color:transparent;color:var(--green-strong);padding:0 12px}
-.btn-sm{min-height:36px;padding:0 14px;font-size:13px;border-radius:10px}
-.btn[disabled]{opacity:.55;cursor:default;transform:none}
-.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-
-/* Badges */
-.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;line-height:24px;padding:0 10px;border-radius:999px;background:var(--cream-2);color:var(--muted);white-space:nowrap}
-.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.b-paid{background:var(--success-soft);color:var(--success)}
-.b-due{background:var(--sun-soft);color:var(--warning)}
-.b-proof{background:var(--info-soft);color:var(--info)}
-.b-remind{background:var(--peony);color:var(--peony-ink)}
-
-/* Logo: "The Happy Bubble", universal one-colour version from the moodboard */
-.logo{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
-.logo svg{filter:drop-shadow(0 2px 6px rgba(0,0,0,.16))}
-.logo span{font:800 26px/1 var(--display);color:var(--green-strong);letter-spacing:-.01em;padding-top:4px}
-
-/* Header */
-.site-head{position:sticky;top:0;z-index:20;background:rgba(251,248,243,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.site-head .wrap{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav{display:flex;gap:4px}
-.nav a{min-height:44px;display:inline-flex;align-items:center;padding:0 12px;border-radius:10px;color:var(--ink-body);font-weight:600;font-size:15px;text-decoration:none}
-.nav a:hover{background:var(--cream-2);color:var(--ink)}
-.head-actions{display:flex;align-items:center;gap:8px}
-.login{position:relative}
-.login summary{list-style:none}
-.login summary::-webkit-details-marker{display:none}
-.login-menu{position:absolute;right:0;top:calc(100% + 8px);width:260px;padding:8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow);display:flex;flex-direction:column}
-.login-menu a{display:flex;flex-direction:column;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}
-.login-menu a small{color:var(--muted);font-weight:400;font-size:13px}
-.login-menu a:hover{background:var(--cream-2)}
-@media (max-width:860px){.nav{display:none}}
-@media (max-width:480px){.head-actions .btn-primary{display:none}}
-
-/* Stage: layout after the reference. Visuals left on cream, short text blocks right,
-   all sitting on one continuous green wave, one pill button per block. */
-.stage{position:relative;overflow:hidden;padding:16px 0 56px}
-.stage-wave{position:absolute;top:0;right:0;width:calc(50% + 120px);height:100%}
-.stage-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;min-height:440px;padding:32px 0}
-.stage-visual{display:flex;justify-content:center}
-.stage-text{padding-left:72px;max-width:540px;color:var(--on-field);display:flex;flex-direction:column;align-items:flex-start;gap:14px}
-.stage-text .eyebrow{color:var(--field-eyebrow)}
-.stage-text h1{font-size:clamp(40px,5vw,64px);line-height:1.04;color:var(--on-field)}
-.stage-text h1 em{font-style:normal;color:var(--field-hi)}
-.stage-text h2{font-size:clamp(28px,3vw,38px);color:var(--on-field)}
-.stage-text p{font-size:16px;color:var(--on-field-muted);max-width:440px}
-.stage-text .lead{font-size:18px}
-.stage-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-.pill{min-height:46px;padding:0 24px;border-radius:999px;border:2px solid #fff;background:#fff;color:var(--green-strong);font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:transform .18s ease-out}
-.pill:hover{transform:translateY(-1px)}
-.pill-outline{background:transparent;color:var(--on-field);border-color:var(--on-field-line)}
-.stage-art svg{width:100%;max-width:460px;height:auto}
-.door-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--green-soft);color:var(--green-strong)}
-.door-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.mini{width:100%;max-width:440px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:12px}
-.mini-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding-top:12px;border-top:1px solid var(--line)}
-.mini-row .stu{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--ink)}
-@media (max-width:960px){
-  .stage{padding:16px 0 32px}
-  .stage-wave{display:none}
-  .stage-row{grid-template-columns:1fr;gap:20px;min-height:0;padding:12px 0}
-  .stage-text{order:-1;max-width:none;padding:28px 22px;border-radius:28px;background:var(--field)}
-}
-
-/* Wave dividers around the green parents band */
-.wave{display:block;width:100%;height:64px;margin:-1px 0}
-
-/* Phone */
-.phone{position:relative;width:320px;max-width:100%;padding:10px;border-radius:44px;background:var(--ink);box-shadow:0 24px 60px rgba(58,47,39,.22)}
-.screen{border-radius:34px;overflow:hidden;background:var(--cream);min-height:560px;display:flex;flex-direction:column}
-.p-head{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 12px;background:var(--card);border-bottom:1px solid var(--line)}
-.p-head .who{display:flex;flex-direction:column}
-.p-head .who small{font-size:11px;color:var(--muted)}
-.p-head .who strong{font:700 17px/1.2 var(--display);color:var(--ink)}
-.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--green-soft);color:var(--green-strong);flex:0 0 auto}
-.av-sun{background:var(--sun);color:var(--ink)}.av-peony{background:var(--peony);color:var(--peony-ink)}.av-mint{background:var(--mint-soft);color:var(--info)}
-.p-body{padding:14px;display:flex;flex-direction:column;gap:12px;flex:1}
-.p-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.p-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}
-.p-card h4{font-size:17px;font-weight:700}
-.p-card p{font-size:13px;line-height:1.5;color:var(--muted)}
-.p-pay{background:var(--sun-soft);border-color:#F1DDB3}
-.p-pay.is-paid{background:var(--success-soft);border-color:#C9E6D3}
-.p-pay .amount{font:700 22px/1.1 var(--sans);font-variant-numeric:tabular-nums;color:var(--ink)}
-.photo{border-radius:12px;display:grid;place-items:center;overflow:hidden;padding:8px}
-.photo svg{width:100%;height:100%;max-width:280px}
-[id]{scroll-margin-top:88px}
-.ph-peony{background:var(--peony-soft)}.ph-green{background:var(--green-soft)}.ph-sun{background:var(--sun-soft)}.ph-mint{background:var(--mint-soft)}
-.note{padding:8px 10px;border-radius:10px;background:var(--sun-soft);font-size:12px;line-height:1.45;color:var(--ink)}
-.is-new{animation:arrive .25s ease-out}
-@keyframes arrive{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.ping{position:relative}
-.ping::after{content:"";position:absolute;inset:-2px;border-radius:inherit;border:2px solid var(--green);animation:ping 1s ease-out 1 forwards;pointer-events:none}
-@keyframes ping{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.06)}}
-
-/* Demo */
-.mode{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 16px;padding:14px 16px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line)}
-.mode > span{font-weight:700;color:var(--ink);font-size:15px}
-.mode .tabs button[aria-pressed="true"]{background:var(--btn);color:var(--on-btn)}
-.mode p{flex-basis:100%;font-size:14px;color:var(--muted)}
-.steps{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;padding:0;list-style:none}
-.steps li{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--muted)}
-.steps li.steps-menu{padding:8px 4px;border:0;background:none;color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.steps li b{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--cream-2);font-size:12px;color:var(--muted)}
-.steps li.on{border-color:var(--green-strong);color:var(--ink)}
-.steps li.on b{background:var(--btn);color:var(--on-btn)}
-.steps li.done{color:var(--success)}
-.steps li.done b{background:var(--success-soft);color:var(--success)}
-.demo-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;align-items:start}
-.console{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
-.c-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
-.c-school{display:flex;align-items:center;gap:10px}
-.c-school strong{display:block;font-size:15px;color:var(--ink)}
-.c-school small{display:block;font-size:12px;color:var(--muted)}
-.tabs{display:inline-flex;padding:4px;border-radius:12px;background:var(--cream-2)}
-.tabs button{font:600 14px/1 var(--sans);min-height:40px;padding:0 16px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer}
-.tabs button[aria-selected="true"]{background:var(--card);color:var(--green-strong);box-shadow:0 1px 4px rgba(58,47,39,.1)}
-.c-body{padding:20px}
-.pane-desc{margin-top:4px;font-size:14px;color:var(--muted)}
-.sub-head{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;max-width:720px}
-.sub-head h3{font-size:clamp(24px,3vw,30px);font-weight:700}
-.sub-head > p:last-child{font-size:16px;color:var(--ink-body)}
-.g-search{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;margin-bottom:16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card)}
-.g-search svg{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
-.g-search input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 15px var(--sans);color:var(--ink)}
-.g-search:focus-within{outline:2px solid var(--green-strong);outline-offset:1px}
-.g-feed{display:flex;flex-direction:column;gap:14px}
-.g-card{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);overflow:hidden}
-.g-card-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:14px 16px}
-.g-card-head .who{display:flex;align-items:center;gap:10px}
-.g-card-head strong{display:block;font-size:15px;color:var(--ink)}
-.g-card-head small{display:block;font-size:12px;color:var(--muted)}
-.g-tag{font-size:12px;font-weight:700;color:var(--green-strong)}
-.g-card .photo{border-radius:0;height:200px}
-.g-card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
-.g-card-body h4{font-size:20px;font-weight:700}
-.g-card-body p{font-size:14px;color:var(--muted)}
-.g-tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.g-tools .g-search{flex:1 1 240px;margin:0}
-.g-tools select{min-height:48px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card);font:500 15px var(--sans);color:var(--ink)}
-.g-table{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
-.g-tr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.1fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-body)}
-.g-tr strong{color:var(--ink)}
-.g-th{border-top:0;background:var(--cream);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.g-tr .go{width:44px;display:flex;justify-content:flex-end;color:var(--muted)}
-.g-tr .go svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sr-col{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.g-school{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--line);border-radius:var(--r-lg);background:linear-gradient(90deg,var(--card),var(--embun))}
-.g-school strong{display:block;margin-top:6px;font:700 22px/1.2 var(--display);color:var(--ink)}
-.g-school small{display:block;font-size:12px;color:var(--muted)}
-.g-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-.g-info > div{display:flex;gap:12px;padding:16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card)}
-.g-info svg{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:var(--green-strong);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.g-info small{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green-strong)}
-.g-info strong{display:block;font-size:15px;color:var(--ink);overflow-wrap:anywhere}
-.g-info em{display:block;font-style:normal;font-size:12px;color:var(--muted)}
-.g-about{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px;padding:16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card)}
-.g-about strong{display:block;font-size:15px;color:var(--ink)}
-.g-about p{font-size:13px;color:var(--muted)}
-.g-panel{padding:18px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);margin-bottom:14px}
-.g-panel-title{display:block;margin-top:2px;font:700 20px/1.2 var(--display);color:var(--ink)}
-.g-form{margin-top:14px}
-.g-panel-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
-@media (max-width:720px){
-  .g-th{display:none}
-  .g-tr{grid-template-columns:minmax(0,1fr) auto;row-gap:4px}
-  .g-tr > :nth-child(2),.g-tr > :nth-child(3){font-size:13px;color:var(--muted)}
-}
-.g-empty{padding:24px;text-align:center;font-size:14px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r-md)}
-.lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);background:var(--card)}
-.lrow:first-child{border-top:0}
-.lrow .stu{display:flex;align-items:center;gap:10px;min-width:0}
-.lrow .stu > span:last-child{min-width:0}
-.lrow strong{display:block;font-size:14px;color:var(--ink);overflow-wrap:anywhere}
-.lrow small{display:block;font-size:12px;color:var(--muted)}
-.list-foot{margin-top:8px;font-size:13px;color:var(--muted)}
-.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.subtabs button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:600 14px var(--sans);color:var(--ink-body);cursor:pointer}
-.subtabs button[aria-pressed="true"]{background:var(--green-soft);border-color:var(--green-soft);color:var(--green-strong)}
-.inline-form{margin-bottom:14px;padding:16px;border-radius:var(--r-md);border:1px solid var(--green-strong);background:var(--cream)}
-.if-title{display:block;margin-bottom:10px;color:var(--ink);font-size:15px}
-.if-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.if-grid label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--ink)}
-.if-grid input,.if-grid select{min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font:400 15px var(--sans);color:var(--ink)}
-.if-grid input[readonly]{background:var(--cream-2);color:var(--muted)}
-.if-note{margin-top:10px;font-size:13px;color:var(--muted)}
-.if-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
-.profile{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;padding:20px;border:1px solid var(--line);border-radius:var(--r-md)}
-.profile dl{flex:1 1 260px;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px 20px}
-.profile dt{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.profile dd{margin:2px 0 0;font-size:15px;font-weight:600;color:var(--ink)}
-.c-layout{display:grid;grid-template-columns:190px minmax(0,1fr)}
-.c-main{min-width:0;overflow:hidden;transition:height .3s ease-out;touch-action:pan-y}
-.c-track{display:flex;align-items:flex-start;transition:transform .35s ease-out}
-.c-track > .c-body{flex:0 0 100%;min-width:0}
-.slider-bar{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;gap:8px 12px;margin-bottom:16px;padding:14px;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line)}
-.sl-arrow{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--cream);color:var(--green-strong);display:grid;place-items:center;cursor:pointer}
-.sl-arrow:hover{background:var(--green-soft)}
-.sl-arrow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sl-info{text-align:center}
-.sl-count{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green-strong)}
-.sl-info strong{display:block;font:700 22px/1.2 var(--display);color:var(--ink);margin:2px 0}
-.sl-info p{font-size:14px;color:var(--muted)}
-.sl-dots{grid-column:1/-1;display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
-.sl-dots button{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font:600 13px var(--sans);color:var(--muted);cursor:pointer}
-.sl-dots button[aria-current="true"]{background:var(--btn);border-color:var(--btn);color:var(--on-btn)}
-.c-side{display:flex;flex-direction:column;gap:2px;padding:12px 10px;border-right:1px solid var(--line)}
-.c-side-label{padding:12px 10px 6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.c-side button{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border:0;border-radius:10px;background:none;font:600 14px var(--sans);color:var(--ink-body);text-align:left;white-space:nowrap;cursor:pointer}
-.c-side button svg{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.c-side button:hover{background:var(--cream)}
-.c-side button[aria-current="page"]{background:var(--green-soft);color:var(--green-strong)}
-@media (max-width:720px){
-  .c-layout{grid-template-columns:1fr}
-  .c-side{display:none}
-}
-.c-greet{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:16px}
-.c-greet h3{font-size:24px;font-weight:700}
-.c-greet small{font-size:13px;color:var(--muted)}
-.meter{display:flex;flex-direction:column;gap:6px;min-width:180px}
-.meter span{font-size:13px;color:var(--muted)}
-.meter strong{color:var(--ink);font-variant-numeric:tabular-nums}
-.bar{height:8px;border-radius:999px;background:var(--cream-2);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--green);border-radius:inherit;transition:width .25s ease-out}
-.rows{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
-.row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);background:var(--card)}
-.row:first-child{border-top:0}
-.row .stu{display:flex;align-items:center;gap:10px;min-width:0}
-.row .stu > div{min-width:0}
-.row .stu strong{display:block;font-size:14px;color:var(--ink);overflow-wrap:anywhere}
-.row .stu small{display:block;font-size:12px;color:var(--muted)}
-.row .act{min-width:150px;display:flex;justify-content:flex-end}
-.row.you{background:#FFFCF5}
-.row .stu .you-tag{font-size:11px;font-weight:700;color:var(--warning)}
-.compose{display:flex;flex-direction:column;gap:18px}
-.field-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:600 14px/1 var(--sans);min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.chip[aria-pressed="true"]{background:var(--green-soft);border-color:var(--green-strong);color:var(--green-strong)}
-.chip .avatar{width:26px;height:26px;font-size:10px;margin-left:-8px}
-.preview{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;padding:14px;border-radius:var(--r-md);background:var(--cream);border:1px dashed var(--line)}
-.preview .photo{height:96px}
-.preview h4{font-size:18px;font-weight:700}
-.preview p{font-size:14px;color:var(--muted)}
-.c-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
-.toast{min-height:22px;font-size:14px;font-weight:600;color:var(--green-strong)}
-.toast.warn{color:var(--warning)}
-.demo-side{display:flex;flex-direction:column;align-items:center;gap:12px;position:sticky;top:96px}
-.demo-side .caption{font-size:13px;color:var(--muted);text-align:center;max-width:300px}
-.reset{font:600 14px var(--sans);border:0;background:none;color:var(--green-strong);cursor:pointer;min-height:44px;text-decoration:underline;text-underline-offset:3px}
-@media (max-width:960px){.demo-grid{grid-template-columns:1fr}.demo-side{position:static}}
-@media (max-width:560px){.row{grid-template-columns:minmax(0,1fr) auto}.row .act{grid-column:1/-1;justify-content:flex-start;min-width:0}.preview{grid-template-columns:1fr}}
-
-/* School section */
-.ba-compact{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.ba-compact > div{padding:20px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line)}
-.ba-compact > div:last-child{background:var(--green-soft)}
-.ba-compact small{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.ba-compact > div:last-child small{color:var(--green-strong)}
-.ba-compact ul{margin:0;padding:0 0 0 18px;font-size:15px;line-height:1.5;display:flex;flex-direction:column;gap:6px}
-@media (max-width:560px){.ba-compact{grid-template-columns:1fr}}
-.portal-wali{padding-top:48px}
-#sekolah .sub-head{margin-top:72px}
-.naik-level-section{padding-top:0}
-.naik-level-section .pilot{margin-top:0}
-.wali-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:24px}
-.wali-actions .ask{flex:1 1 360px;margin-top:0}
-.quote{margin-top:20px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border-radius:var(--r-xl);overflow:hidden;background:var(--ink);color:#F3EEE6}
-.quote blockquote{margin:0;padding:40px;display:flex;flex-direction:column;gap:20px}
-.quote blockquote p{font:700 clamp(22px,2.6vw,28px)/1.35 var(--display);color:var(--cream)}
-.quote cite{font-style:normal;display:flex;align-items:center;gap:12px;font-size:14px}
-.quote cite small{display:block;color:#D9CFC5;font-size:13px}
-.quote .photo{border-radius:0;min-height:240px;background:#5B4A3F;color:#F3EEE6}
-.sample{align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(246,185,74,.18);color:var(--sun)}
-.pilot{margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:32px;padding:40px;border-radius:var(--r-xl);background:var(--field);color:var(--on-field);position:relative;overflow:hidden}
-.pilot h3{color:var(--on-field);font-size:clamp(28px,3.4vw,38px)}
-.pilot ol{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
-.pilot li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;font-size:15px;color:var(--on-field-muted)}
-.pilot li b{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--sun);color:var(--ink);font-weight:700}
-.pilot li strong{display:block;color:var(--on-field)}
-.pilot-lead{margin-top:10px;font-size:17px;color:var(--on-field-muted)}
-.quota{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:14px 16px;border-radius:var(--r-md);background:var(--field-tint)}
-.quota p{font-size:15px;color:var(--on-field-muted)}
-.quota strong{color:var(--on-field)}
-.slots{display:flex;gap:6px}
-.slots span{width:26px;height:26px;border-radius:50%;border:2px solid var(--on-field-line)}
-.slots .on{background:var(--sun);border-color:var(--sun)}
-.slots .maybe{border-style:dashed}
-.perks{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pilot .perks li{display:block;padding:14px 16px;border-radius:var(--r-md);background:var(--card);color:var(--muted);font-size:14px;line-height:1.45}
-.pilot .perks strong{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
-.criteria{margin-top:12px;font-size:14px;color:var(--on-field-muted)}
-.pilot ol{margin-top:22px}
-@media (max-width:480px){.perks{grid-template-columns:1fr}}
-.campaign-tag{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border-radius:999px;background:var(--sun);color:var(--ink);font-size:13px;font-weight:700;text-decoration:none}
-.campaign-tag:hover{background:#F8C566}
-.form{background:var(--card);border-radius:var(--r-lg);padding:24px;color:var(--ink-body);position:relative;z-index:1}
-.form h4{font-size:22px;font-weight:700;margin-bottom:4px}
-.form > p{font-size:14px;color:var(--muted);margin-bottom:16px}
-.form label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin:12px 0 6px}
-.form input,.form textarea{width:100%;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--cream);font:400 15px var(--sans);color:var(--ink)}
-.form textarea{min-height:96px;resize:vertical}
-.form input:focus,.form textarea:focus{outline:2px solid var(--green-strong);outline-offset:1px;background:#fff}
-.form .status{min-height:20px;margin:10px 0;font-size:13px;font-weight:600;color:var(--green-strong)}
-.form .wa{display:inline-flex;margin-top:12px;font-size:14px;font-weight:600}
-@media (max-width:860px){.quote,.pilot{grid-template-columns:1fr}.pilot{padding:28px}.quote blockquote{padding:28px}}
-@media (max-width:480px){.ba{grid-template-columns:1fr}.panel{padding:22px}}
-
-/* Parents */
-.parents{background:var(--field);color:var(--on-field);padding:56px 0}
-.parents .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:center}
-.parents h2{color:var(--on-field)}
-.parents .eyebrow{color:var(--field-eyebrow)}
-.parents .lead{color:var(--on-field-muted)}
-.parents .btn-ghost{color:var(--on-field);text-decoration:underline;text-underline-offset:3px}
-.btn-light{background:#fff;border-color:#fff;color:var(--green-strong)}
-.parents-art svg{width:100%;max-width:480px;height:auto;margin:0 auto}
-.benefits{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
-.benefit{padding:18px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line)}
-.benefit .door-icon{width:40px;height:40px;border-radius:12px;margin-bottom:10px}
-.benefit strong{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
-.benefit span{font-size:14px;line-height:1.5;color:var(--muted)}
-.ask{margin-top:20px;padding:20px;border-radius:var(--r-md);background:var(--sun-soft);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
-.ask p{font-size:15px;color:var(--ink);max-width:340px}
-@media (max-width:860px){.parents .wrap{grid-template-columns:1fr}.parents-art{order:1;max-width:380px;margin:0 auto}}
-@media (max-width:480px){.benefits{grid-template-columns:1fr}}
-
-/* FAQ + footer */
-.faq{max-width:760px;display:flex;flex-direction:column;gap:10px}
-.faq details{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:0 20px}
-.faq summary{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;font-weight:700;color:var(--ink);list-style:none}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font:700 22px var(--sans);color:var(--green-strong)}
-.faq details[open] summary::after{content:"–"}
-.faq details p{padding:0 0 18px;font-size:15px}
-.foot{border-top:1px solid var(--line);padding:40px 0 28px;background:var(--cream)}
-.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px}
-.foot p{font-size:14px;color:var(--muted);margin-top:10px;max-width:320px}
-.foot-links{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
-.foot-bottom{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);width:100%}
-.wa-float{position:fixed;right:20px;bottom:20px;z-index:30;min-height:52px;padding:0 18px 0 14px;border-radius:999px;background:var(--btn);color:var(--on-btn);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;box-shadow:0 10px 24px rgba(0,115,95,.3)}
-.wa-float svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:480px){.wa-float span{display:none}.wa-float{padding:0 15px}}
-</style>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
 </head>
 <body>
-
-<!-- Logo mark + flat illustrations (stand-ins until real, consented photos are available) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="logo-mark" viewBox="0 0 110 110">
+<symbol id="logo-mark" viewBox="0 0 110 110">
     <path d="M8 44 C8 20 24 8 55 8 C86 8 102 20 102 44 C102 68 86 80 55 80 C47 80 40 79 34 77 L18 96 L22 74 C12 66 8 56 8 44 Z" style="fill:var(--mark)" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
     <path d="M38 48 Q55 64 72 48" style="stroke:var(--mark-smile)" stroke-width="6" fill="none" stroke-linecap="round"/>
   </symbol>
-  <symbol id="il-paint" viewBox="0 0 200 140">
-    <rect x="34" y="20" width="132" height="100" rx="10" fill="#fff" transform="rotate(-4 100 70)"/>
-    <circle cx="74" cy="58" r="20" style="fill:var(--il-sun)"/>
-    <circle cx="100" cy="62" r="20" style="fill:var(--il-pink)" opacity=".9"/>
-    <circle cx="86" cy="84" r="18" style="fill:var(--il-mid)" opacity=".85"/>
-    <circle cx="134" cy="52" r="10" fill="#A9C9D9"/>
-    <circle cx="140" cy="84" r="7" style="fill:var(--il-sun)"/>
-    <g transform="rotate(35 150 98)"><rect x="146" y="70" width="8" height="50" rx="4" fill="#5B4A3F"/><ellipse cx="150" cy="68" rx="6" ry="9" style="fill:var(--il-pink)"/></g>
-  </symbol>
-  <symbol id="il-plant" viewBox="0 0 200 140">
-    <circle cx="160" cy="32" r="14" style="fill:var(--il-sun)"/>
-    <path d="M52 42c0 6-8 6-8 0 0-4 4-9 4-9s4 5 4 9zM64 62c0 6-8 6-8 0 0-4 4-9 4-9s4 5 4 9z" fill="#A9C9D9"/>
-    <path d="M100 82V50" style="stroke:var(--il-dark)" stroke-width="5" stroke-linecap="round"/>
-    <path d="M100 62c-14 0-24-8-26-22 14 0 24 8 26 22zM100 54c12 0 22-8 24-20-12 0-22 8-24 20z" style="fill:var(--il-mid)"/>
-    <path d="M74 90h52l-8 36H82z" style="fill:var(--il-pink)"/>
-    <rect x="68" y="80" width="64" height="13" rx="5" style="fill:var(--il-pink-dark)"/>
-  </symbol>
-  <symbol id="il-music" viewBox="0 0 200 140">
-    <path d="M40 60a30 30 0 0 1 0 40M30 50a44 44 0 0 1 0 60" style="stroke:var(--il-pink)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M160 60a30 30 0 0 0 0 40M170 50a44 44 0 0 0 0 60" style="stroke:var(--il-pink)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <rect x="86" y="42" width="6" height="58" rx="3" style="fill:var(--il-dark)"/><rect x="128" y="34" width="6" height="58" rx="3" style="fill:var(--il-dark)"/>
-    <path d="M86 42l48-8v13l-48 8z" style="fill:var(--il-dark)"/>
-    <ellipse cx="80" cy="100" rx="13" ry="11" style="fill:var(--il-mid)"/><ellipse cx="122" cy="92" rx="13" ry="11" style="fill:var(--il-mid)"/>
-    <circle cx="66" cy="34" r="5" style="fill:var(--il-sun)"/><circle cx="150" cy="116" r="5" style="fill:var(--il-sun)"/>
-  </symbol>
-  <symbol id="il-book" viewBox="0 0 200 140">
-    <path d="M100 38c-18-10-40-12-62-8v80c22-4 44-2 62 8z" fill="#fff"/>
-    <path d="M100 38c18-10 40-12 62-8v80c-22-4-44-2-62 8z" fill="#FFFDF8"/>
-    <path d="M100 38v80" stroke="#E5DED3" stroke-width="3"/>
-    <circle cx="68" cy="66" r="14" style="fill:var(--il-sun)"/>
-    <path d="M50 96c10-12 26-12 38 0z" style="fill:var(--il-mid)"/>
-    <rect x="114" y="52" width="36" height="6" rx="3" fill="#A9C9D9"/><rect x="114" y="66" width="30" height="6" rx="3" fill="#A9C9D9"/><rect x="114" y="80" width="34" height="6" rx="3" fill="#A9C9D9"/>
-    <path d="M160 16l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z" style="fill:var(--il-pink)"/>
-  </symbol>
-  <symbol id="il-bag" viewBox="0 0 200 140">
-    <path d="M66 40v-8a14 14 0 0 1 28 0v8" style="stroke:var(--il-dark)" stroke-width="6" fill="none"/>
-    <rect x="48" y="38" width="64" height="84" rx="18" style="fill:var(--il-mid)"/>
-    <rect x="58" y="82" width="44" height="28" rx="10" style="fill:var(--il-dark)" opacity=".35"/>
-    <g transform="rotate(-18 150 90)"><rect x="126" y="62" width="12" height="54" rx="3" style="fill:var(--il-sun)"/><path d="M126 62l6-12 6 12z" style="fill:var(--il-sun)"/></g>
-    <g transform="rotate(-6 160 90)"><rect x="146" y="58" width="12" height="58" rx="3" style="fill:var(--il-pink)"/><path d="M146 58l6-12 6 12z" style="fill:var(--il-pink)"/></g>
-    <g transform="rotate(8 172 90)"><rect x="164" y="64" width="12" height="52" rx="3" fill="#A9C9D9"/><path d="M164 64l6-12 6 12z" fill="#A9C9D9"/></g>
-  </symbol>
-  <symbol id="il-phone" viewBox="0 0 200 140">
-    <circle cx="100" cy="72" r="56" fill="none" style="stroke:var(--il-mid)" stroke-width="2" opacity=".25"/>
-    <circle cx="100" cy="72" r="40" fill="none" style="stroke:var(--il-mid)" stroke-width="2" opacity=".35"/>
-    <rect x="74" y="22" width="52" height="100" rx="12" fill="#3A2F27"/>
-    <rect x="79" y="30" width="42" height="84" rx="8" fill="#FBF8F3"/>
-    <rect x="84" y="38" width="32" height="24" rx="5" style="fill:var(--il-pink)"/>
-    <rect x="84" y="68" width="28" height="5" rx="2.5" fill="#E5DED3"/><rect x="84" y="78" width="20" height="5" rx="2.5" fill="#E5DED3"/>
-    <rect x="84" y="92" width="32" height="12" rx="4" style="fill:var(--il-mid)"/>
-    <g transform="translate(118 8) scale(.4)"><use href="#logo-mark"/></g>
-  </symbol>
-  <symbol id="il-class" viewBox="0 0 200 140">
-    <rect x="36" y="18" width="128" height="66" rx="8" style="fill:var(--il-dark)"/>
-    <circle cx="70" cy="48" r="12" fill="none" stroke="#FBF8F3" stroke-width="3"/>
-    <path d="M70 28v-4M70 72v-4M50 48h-4M94 48h-4" stroke="#FBF8F3" stroke-width="3" stroke-linecap="round"/>
-    <path d="M110 40h36M110 52h28M110 64h32" stroke="#FBF8F3" stroke-width="3" stroke-linecap="round" opacity=".7"/>
-    <rect x="56" y="102" width="88" height="8" rx="4" style="fill:var(--il-pink)"/>
-    <path d="M66 110v18M134 110v18" style="stroke:var(--il-pink)" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="86" cy="96" r="6" style="fill:var(--il-sun)"/><rect x="104" y="90" width="18" height="12" rx="2" fill="#A9C9D9"/>
-  </symbol>
 </svg>
-
 <header class="site-head">
   <div class="wrap">
-    <a class="logo" href="#atas" aria-label="Classping, ke atas">
-      <svg width="40" height="40" aria-hidden="true"><use href="#logo-mark"/></svg>
-      <span>classping</span>
-    </a>
+    <a class="logo" href="#atas" aria-label="Classping, ke atas"><svg aria-hidden="true"><use href="#logo-mark"/></svg><span>classping</span></a>
     <nav class="nav" aria-label="Utama">
-      <a href="#sekolah">Untuk sekolah</a>
-      <a href="#orang-tua">Untuk orang tua</a>
-      <a href="#tanya">Tanya jawab</a>
+      <a href="#sekolah">Untuk sekolah</a><a href="#demo">Coba alurnya</a><a href="#tanya">Tanya jawab</a>
     </nav>
     <div class="head-actions">
       <details class="login">
-        <summary class="btn btn-ghost btn-sm" style="min-height:44px;color:var(--ink)">Masuk
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </summary>
+        <summary class="btn btn-sm">Masuk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <div class="login-menu">
-          <a href="https://school.theclassping.com">Portal Sekolah<small>Untuk kepala sekolah, guru, dan staf</small></a>
-          <a href="https://guardian.theclassping.com">Portal Wali Murid<small>Untuk Ayah, Bunda, dan wali</small></a>
+          <a href="https://school.theclassping.com">Portal Sekolah<small>Untuk staf dan guru</small></a>
+          <a href="https://guardian.theclassping.com">Portal Wali Murid<small>Untuk orang tua dan wali</small></a>
         </div>
       </details>
-      <a class="btn btn-primary btn-sm" style="min-height:44px;border-radius:999px;padding:0 20px" href="#jadwalkan-demo" data-focus-form>Jadwalkan demo</a>
+      <a class="btn btn-primary btn-sm btn-wa" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l-4 3 1.5-6A8.5 8.5 0 1 1 21 11.5Z"/></svg>Chat WhatsApp</a>
     </div>
   </div>
 </header>
-
 <main>
-<!-- ============ STAGE: three zigzag rows on one green wave ============ -->
-<section class="stage" id="atas">
+<section class="stage" id="atas" aria-labelledby="hero-title">
   <svg class="stage-wave" viewBox="0 0 800 1000" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M60 0H800V1000H10C-10 930 50 860 30 790C8 700-14 640 20 560C56 480 76 420 40 340C8 270-14 200 20 130C40 90 72 50 60 0Z" style="fill:var(--field-2)"/>
-    <path d="M90 0H800V1000H40C0 930 70 860 50 790C25 700 0 640 40 560C80 480 100 420 60 340C25 270 0 200 40 130C60 90 100 50 90 0Z" style="fill:var(--field)"/>
+    <path d="M60 0H800V1000H10C-10 930 50 860 30 790C8 700-14 640 20 560C56 480 76 420 40 340C8 270-14 200 20 130C40 90 72 50 60 0Z" fill="var(--green)"/>
+    <path d="M90 0H800V1000H40C0 930 70 860 50 790C25 700 0 640 40 560C80 480 100 420 60 340C25 270 0 200 40 130C60 90 100 50 90 0Z" fill="var(--green-strong)"/>
   </svg>
-
-  <!-- Row 1: what Classping is -->
   <div class="wrap stage-row">
-    <div class="stage-visual" aria-hidden="true">
-      <div class="phone">
-        <div class="screen">
-          <div class="p-head">
-            <div class="who"><small>Portal Wali Murid</small><strong>Selamat pagi, Bunda Rina</strong></div>
-            <span class="avatar av-sun">AP</span>
-          </div>
-          <div class="p-body">
-            <span class="p-label">Aktivitas hari ini · Kelas Matahari</span>
-            <div class="p-card">
-              <div class="photo ph-peony" style="height:140px"><svg viewBox="0 0 200 140"><use href="#il-paint"/></svg></div>
-              <span class="p-label" style="letter-spacing:.04em">09.00 · Seni</span>
-              <h4>Melukis dengan jari</h4>
-              <p>Alya belajar mencampur warna primer jadi warna baru.</p>
-            </div>
-            <div class="p-card p-pay">
-              <div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--ink);font-size:14px">SPP Oktober</strong><span class="badge b-due">Belum dibayar</span></div>
-              <span class="amount">Rp 250.000</span>
-              <p>Jatuh tempo 10 Okt</p>
-            </div>
-          </div>
+    <div class="stage-text">
+      <a class="campaign-tag" href="#naik-level">Sekolah Naik Level · 6 bulan gratis · 4 tempat tersisa →</a>
+      <h1 id="hero-title">Urusan SPP dan kabar anak, <em>beres sebelum jam pulang.</em></h1>
+      <p class="lead">Tidak perlu lagi menagih SPP lewat chat satu per satu atau mengirim foto kegiatan ke setiap orang tua sampai malam. Classping merapikan semuanya di satu portal untuk PAUD, TK, dan Daycare.</p>
+      <div class="stage-actions"><a class="btn btn-white btn-wa" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l-4 3 1.5-6A8.5 8.5 0 1 1 21 11.5Z"/></svg>Tanya kami di WhatsApp</a><a class="quiet-link" href="#naik-level">Lihat harga ↓</a></div>
+      <p class="hero-proof"><span aria-hidden="true">★</span><span><strong>TK. PGRI An-Nahl Sukabumi</strong> siap naik level bersama Classping mulai Januari 2027.</span></p>
+    </div>
+    <div class="stage-visual">
+      <div class="product-preview" id="preview">
+        <div class="preview-top"><p class="eyebrow">Tampilan asli Classping</p><span class="preview-hint">Geser atau pilih peran</span></div>
+        <div class="segmented" role="tablist" aria-label="Pilih tampilan portal berdasarkan peran">
+          <button type="button" role="tab" data-preview="staf" aria-selected="true" aria-controls="preview-staf">Staf</button>
+          <button type="button" role="tab" data-preview="guru" aria-selected="false" aria-controls="preview-guru">Guru</button>
+          <button type="button" role="tab" data-preview="orang-tua" aria-selected="false" aria-controls="preview-orang-tua">Orang tua</button>
         </div>
-      </div>
-    </div>
-    <div class="stage-text">
-      <a class="campaign-tag" href="#naik-level">Sekolah Naik Level · 6 bulan gratis · tersisa 2–4 tempat →</a>
-      <p class="eyebrow">Portal sekolah · Portal wali murid</p>
-      <h1>Satu portal untuk <em>semua urusan sekolah.</em></h1>
-      <p class="lead">Classping membantu PAUD, TK dan Daycare mengelola administrasi dan aktivitas anak di satu tempat.</p>
-      <div class="stage-actions">
-        <a class="pill" href="#jadwalkan-demo" data-focus-form>Jadwalkan demo</a>      </div>
-    </div>
-  </div>
-
-  <!-- Row 2: for schools -->
-  <div class="wrap stage-row">
-    <div class="stage-visual" aria-hidden="true">
-      <div class="mini">
-        <div class="c-school"><span class="avatar">HB</span><div><strong>TK Harapan Bangsa</strong><small>Portal Sekolah · Bu Nia</small></div></div>
-        <div class="meter"><span>SPP Oktober lunas <strong>5 dari 8</strong></span><div class="bar"><i style="width:62.5%"></i></div></div>
-        <div class="mini-row"><span class="stu"><span class="avatar av-sun">AP</span>Alya Putri</span><span class="badge b-due">Belum dibayar</span></div>
-        <div class="mini-row"><span class="stu"><span class="avatar av-peony">RA</span>Raka Aditya</span><span class="badge b-proof">Bukti diterima</span></div>
-        <div class="mini-row"><span class="stu"><span class="avatar av-mint">NZ</span>Nayla Zahra</span><span class="badge b-paid">Lunas</span></div>
-      </div>
-    </div>
-    <div class="stage-text">
-      <p class="eyebrow">Untuk pengelola sekolah</p>
-      <h2>SPP lebih tertib, orang tua lebih percaya.</h2>
-      <p>Tagihan sekelas sekali klik, bukti bayar langsung masuk, dan laporan harian sampai ke setiap keluarga.</p>
-      <div class="stage-actions"><a class="pill" href="#sekolah">Lihat untuk sekolah</a></div>
-    </div>
-  </div>
-
-  <!-- Row 3: for parents -->
-  <div class="wrap stage-row">
-    <div class="stage-visual stage-art" aria-hidden="true">
-      <svg viewBox="0 0 460 320">
-        <use href="#il-paint" x="0" y="0" width="240" height="168"/>
-        <use href="#il-plant" x="220" y="30" width="230" height="161"/>
-        <use href="#il-bag" x="90" y="150" width="240" height="168"/>
-      </svg>
-    </div>
-    <div class="stage-text">
-      <p class="eyebrow">Untuk orang tua &amp; wali</p>
-      <h2>Tahu kabar si kecil, tanpa harus bertanya.</h2>
-      <p>Foto dan catatan guru setiap hari, plus tagihan SPP yang jelas — hanya untuk anak Anda.</p>
-      <div class="stage-actions">
-        <a class="pill" href="#orang-tua">Lihat untuk orang tua</a>
-        <a class="pill pill-outline" href="https://guardian.theclassping.com">Masuk portal</a>
+        <div class="device-carousel">
+          <button class="carousel-arrow prev" type="button" data-slide="-1" aria-label="Tampilan sebelumnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+          <div class="device-track" id="device-track" tabindex="0" aria-live="polite">
+            <figure class="device-slide" id="preview-staf" data-preview-panel="staf" role="tabpanel" aria-roledescription="slide" aria-label="1 dari 3">
+              <button class="device device-laptop" type="button" data-enlarge="Portal Sekolah · Staf · Desktop" aria-label="Perbesar screenshot portal staf pada desktop"><span class="device-screen"><img src="assets/portal-staf-desktop.jpg" width="800" height="499" alt="Dashboard staf Classping di desktop dengan bukti pembayaran yang menunggu verifikasi dan pintasan administrasi." fetchpriority="high"></span><span class="device-base" aria-hidden="true"></span></button>
+              <figcaption><strong>Staf · Desktop</strong><p>Pantau tagihan dan periksa bukti bayar.</p></figcaption>
+            </figure>
+            <figure class="device-slide" id="preview-guru" data-preview-panel="guru" role="tabpanel" aria-roledescription="slide" aria-label="2 dari 3">
+              <button class="device device-tablet" type="button" data-enlarge="Portal Sekolah · Guru · Tablet" aria-label="Perbesar screenshot portal guru pada tablet"><span class="device-screen"><img src="assets/portal-guru-tablet.jpg" width="800" height="1066" alt="Portal guru Classping di tablet saat menyusun laporan aktivitas dengan foto dan catatan untuk setiap siswa." loading="lazy"></span></button>
+              <figcaption><strong>Guru · Tablet</strong><p>Susun foto dan catatan aktivitas siswa.</p></figcaption>
+            </figure>
+            <figure class="device-slide" id="preview-orang-tua" data-preview-panel="orang-tua" role="tabpanel" aria-roledescription="slide" aria-label="3 dari 3">
+              <button class="device device-phone" type="button" data-enlarge="Portal Wali Murid · Orang tua · Mobile" aria-label="Perbesar screenshot portal orang tua pada mobile"><span class="device-screen"><span class="device-notch" aria-hidden="true"></span><img src="assets/portal-orang-tua-mobile.jpg" width="750" height="1624" alt="Portal orang tua Classping di ponsel menampilkan foto anak dan cerita aktivitas Bermain brakiasi dari sekolah." loading="lazy"></span></button>
+              <figcaption><strong>Orang tua · Mobile</strong><p>Ikuti kegiatan anak lewat portal sendiri.</p></figcaption>
+            </figure>
+          </div>
+          <button class="carousel-arrow next" type="button" data-slide="1" aria-label="Tampilan berikutnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+        </div>
+        <div class="carousel-dots" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ FOR SCHOOLS ============ -->
-<section class="section" id="sekolah">
+<section class="section" id="sekolah" aria-labelledby="school-title">
   <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">Untuk sekolah</p>
-      <h2>Kembalikan jam yang hilang untuk urusan admin.</h2>
-      <p class="lead">Cek transfer, kejar SPP, kirim foto ke setiap grup kelas. Classping merapikan semuanya, supaya guru bisa kembali fokus ke anak-anak.</p>
-    </div>
-
+    <div class="section-head"><h2 id="school-title">Kurangi pekerjaan berulang. Kembalikan waktu untuk siswa.</h2><p class="lead">Bukti bayar, foto, dan catatan aktivitas tersimpan rapi. Staf lebih mudah memantau administrasi, guru punya lebih banyak waktu untuk mendampingi siswa.</p></div>
     <div class="ba-compact">
-      <div><small>Dulu</small><ul><li>Cocokkan transfer satu per satu di spreadsheet</li><li>Ingatkan orang tua satu-satu</li><li>Kirim foto yang sama ke banyak grup</li><li>"Tadi di sekolah ngapain?" berulang kali</li></ul></div>
-      <div><small>Dengan Classping</small><ul><li>Tagihan sekelas sekali klik</li><li>Pengingat sopan dan pembayaran tercatat di portal</li><li>Satu laporan per aktivitas</li><li>Privat untuk setiap keluarga</li></ul></div>
-    </div>
-
-    <figure class="quote" style="margin-left:0;margin-right:0">
-      <blockquote>
-        <span class="sample">Contoh testimoni · ganti dengan kutipan asli</span>
-        <p>"SPP yang dulu kejar-kejaran satu-satu, sekarang tinggal lihat dashboard — siapa yang belum, saya tinggal ingatkan."</p>
-        <cite><span class="avatar">BN</span><span><strong style="color:var(--cream)">Bu Nia</strong><small>Kepala Sekolah, TK Harapan Bangsa</small></span></cite>
-      </blockquote>
-      <div class="photo" aria-hidden="true"><svg viewBox="0 0 200 140"><use href="#il-class"/></svg></div>
-    </figure>
-
-    <!-- Portal Sekolah simulation (shares state with the phone and with Portal Wali Murid in "Untuk orang tua") -->
-    <div class="sub-head" id="demo">
-      <p class="eyebrow">Coba Portal Sekolah</p>
-      <h3>Satu klik di sekolah, langsung sampai ke rumah.</h3>
-    </div>
-
-    <!-- Feature slider: one slide per Portal Sekolah page, synced with the dashboard sidebar -->
-    <div class="slider-bar">
-      <button type="button" class="sl-arrow" data-slide="-1" aria-label="Fitur sebelumnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
-      <div class="sl-info" aria-live="polite">
-        <span class="sl-count" id="sl-count"></span>
-        <strong id="sl-title"></strong>
-        <p id="sl-desc"></p>
-      </div>
-      <button type="button" class="sl-arrow" data-slide="1" aria-label="Fitur berikutnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-      <div class="sl-dots" id="sl-dots" role="group" aria-label="Pilih fitur"></div>
-    </div>
-
-    <div class="mode">
-      <span id="mode-label">Sekolah berlangganan pembayaran otomatis?</span>
-      <div class="tabs" role="group" aria-labelledby="mode-label">
-        <button type="button" data-mode="auto" aria-pressed="true">Ya</button>
-        <button type="button" data-mode="manual" aria-pressed="false">Tidak</button>
-      </div>
-      <p id="mode-note"></p>
-    </div>
-
-    <ol class="steps" id="steps" aria-label="Langkah demo"></ol>
-
-    <div class="demo-grid">
-      <div class="console">
-        <div class="c-head">
-          <div class="c-school">
-            <span class="avatar">HB</span>
-            <div><strong>TK Harapan Bangsa</strong><small>Tahun Ajaran 2026/2027</small></div>
-          </div>
-          <div class="c-school">
-            <span class="avatar av-peony">BN</span>
-            <div><strong>Bu Nia</strong><small>Staf</small></div>
-          </div>
-        </div>
-
-        <div class="c-layout">
-        <!-- Sidebar like the real school dashboard; more menus can be added without changing the layout -->
-        <nav class="c-side" aria-label="Menu portal sekolah">
-          <span class="c-side-label">Menu utama</span>
-          <button type="button" data-tab="siswa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Data Siswa</button>
-          <button type="button" data-tab="akt"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="18" x="4" y="3" rx="2"/><path d="M9 3v2h6V3"/><path d="M8 11h8M8 15h5"/></svg>Laporan Aktivitas</button>
-          <button type="button" data-tab="spp" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>Pembayaran</button>
-          <span class="c-side-label">Pengaturan</span>
-          <button type="button" data-tab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M10 21v-5h4v5"/></svg>Profil Sekolah</button>
-          <button type="button" data-tab="atur"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Pengaturan</button>
-        </nav>
-
-        <div class="c-main" id="c-main">
-        <div class="c-track" id="c-track">
-        <div class="c-body" id="pane-spp">
-          <div class="c-greet">
-            <div><span class="eyebrow">Administrasi sekolah</span><h3>Pembayaran</h3><p class="pane-desc">Kelola transaksi SPP dan pengingat pembayaran siswa.</p></div>
-            <div class="meter"><span>SPP Oktober lunas <strong id="paid-count">5 dari 8</strong></span><div class="bar"><i id="paid-bar" style="width:62.5%"></i></div></div>
-          </div>
-          <div class="rows" id="pay-rows"></div>
-          <p class="toast" id="pay-toast" role="status" aria-live="polite" style="margin-top:14px"></p>
-        </div>
-
-        <div class="c-body" id="pane-siswa">
-          <div class="c-greet">
-            <div><span class="eyebrow">Administrasi sekolah</span><h3>Data Siswa</h3><p class="pane-desc">Siswa aktif di Tahun Ajaran 2026/2027.</p></div>
-            <button type="button" class="btn btn-primary btn-sm" id="kid-open">+ Tambah Siswa</button>
-          </div>
-          <div class="inline-form" id="kid-form" hidden>
-            <strong class="if-title">Tambah Siswa</strong>
-            <div class="if-grid">
-              <label>Nama lengkap<input id="kid-name" type="text" autocomplete="off" placeholder="Misalnya: Dimas Pratama"></label>
-              <label>Kelas<select id="kid-class"><option>A1 · Matahari</option><option>A2 · Pelangi</option><option>B1 · Bintang</option></select></label>
-              <label>Nomor Induk Siswa (NIS)<input id="kid-nis" type="text" readonly></label>
-            </div>
-            <p class="if-note">Data wali, tanggal lahir, dan alamat diisi di formulir lengkap.</p>
-            <div class="if-actions"><button type="button" class="btn btn-sm" id="kid-cancel">Batal</button><button type="button" class="btn btn-sm btn-primary" id="kid-save">Simpan Siswa</button></div>
-          </div>
-          <div class="rows" id="kid-rows"></div>
-          <p class="list-foot">dan 5 siswa lainnya</p>
-          <p class="toast" id="kid-toast" role="status" aria-live="polite"></p>
-        </div>
-
-        <div class="c-body" id="pane-atur">
-          <div class="c-greet"><div><span class="eyebrow">Data utama sekolah</span><h3>Pengaturan</h3><p class="pane-desc">Kelola konfigurasi sekolah dan data utama.</p></div></div>
-          <div class="subtabs" role="group" aria-label="Bagian pengaturan">
-            <button type="button" data-sub="staf">Guru/Staf</button>
-            <button type="button" data-sub="kelas">Kelas</button>
-            <button type="button" data-sub="biaya">Jenis Biaya</button>
-          </div>
-          <div id="atur-staf">
-            <div class="rows">
-              <div class="lrow"><span class="stu"><span class="avatar av-peony">BN</span><span><strong>Bu Nia</strong><small>Kepala Sekolah</small></span></span><span class="badge b-paid">Aktif</span></div>
-              <div class="lrow"><span class="stu"><span class="avatar">BS</span><span><strong>Bu Sari</strong><small>Wali Kelas A1 · Matahari</small></span></span><span class="badge b-paid">Aktif</span></div>
-              <div class="lrow"><span class="stu"><span class="avatar av-mint">BD</span><span><strong>Bu Dewi</strong><small>Wali Kelas A2 · Pelangi</small></span></span><span class="badge b-paid">Aktif</span></div>
-              <div class="lrow"><span class="stu"><span class="avatar av-sun">PD</span><span><strong>Pak Dimas</strong><small>Wali Kelas B1 · Bintang</small></span></span><span class="badge b-paid">Aktif</span></div>
-            </div>
-          </div>
-          <div id="atur-kelas" hidden><div class="rows" id="kelas-rows"></div></div>
-          <div id="atur-biaya" hidden>
-            <div class="c-greet" style="margin-bottom:12px"><strong style="color:var(--ink);font-size:16px">Jenis Biaya</strong><button type="button" class="btn btn-primary btn-sm" id="fee-open">+ Jenis Biaya</button></div>
-            <div class="inline-form" id="fee-form" hidden>
-              <strong class="if-title">Tambah Jenis Biaya</strong>
-              <div class="if-grid">
-                <label>Nama biaya<input id="fee-name" type="text" autocomplete="off" placeholder="Misalnya: Kelas memasak"></label>
-                <label>Jumlah (Rp)<input id="fee-amt" type="number" min="0" step="1000" inputmode="numeric" placeholder="75000"></label>
-                <label>Berulang<select id="fee-rec"><option>Sekali</option><option>Setiap bulan</option></select></label>
-              </div>
-              <div class="if-actions"><button type="button" class="btn btn-sm" id="fee-cancel">Batal</button><button type="button" class="btn btn-sm btn-primary" id="fee-save">Simpan</button></div>
-            </div>
-            <div class="rows" id="fee-rows"></div>
-            <p class="toast" id="fee-toast" role="status" aria-live="polite"></p>
-          </div>
-        </div>
-
-        <div class="c-body" id="pane-profil">
-          <div class="c-greet"><div><span class="eyebrow">Pengaturan</span><h3>Profil Sekolah</h3><p class="pane-desc">Informasi dasar sekolah.</p></div></div>
-          <div class="profile">
-            <span class="avatar" style="width:64px;height:64px;font-size:20px;border-radius:18px">HB</span>
-            <dl>
-              <div><dt>Nama sekolah</dt><dd>TK Harapan Bangsa</dd></div>
-              <div><dt>Jenjang</dt><dd>KB &amp; TK</dd></div>
-              <div><dt>Kepala sekolah</dt><dd>Bu Nia</dd></div>
-              <div><dt>Tahun ajaran aktif</dt><dd>2026/2027</dd></div>
-              <div><dt>Alamat</dt><dd>Jl. Melati No. 12, Bandung</dd></div>
-              <div><dt>Jumlah kelas</dt><dd>3 kelas</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <div class="c-body" id="pane-akt">
-          <div class="c-greet"><div><span class="eyebrow">Dokumentasi harian</span><h3>Laporan Aktivitas</h3><p class="pane-desc">Aktivitas dan foto yang hanya dapat dilihat orang tua siswa terkait.</p></div></div>
-          <div class="compose">
-            <div>
-              <div class="field-label" id="lbl-act">Pilih aktivitas · Kelas Matahari</div>
-              <div class="chips" id="act-chips" role="group" aria-labelledby="lbl-act"></div>
-            </div>
-            <div class="preview" id="act-preview"></div>
-            <div>
-              <div class="field-label" id="lbl-tag">Tandai anak yang ikut</div>
-              <div class="chips" id="tag-chips" role="group" aria-labelledby="lbl-tag"></div>
-            </div>
-            <div class="c-foot">
-              <p class="toast" id="act-toast" role="status" aria-live="polite"></p>
-              <button type="button" class="btn btn-primary" id="post-btn">Kirim laporan
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        </div>
-        </div>
-        </div>
-      </div>
-
-      <div class="demo-side">
-        <div class="phone">
-          <div class="screen">
-            <div class="p-head">
-              <div class="who"><small>Portal Wali Murid</small><strong>Bunda Rina</strong></div>
-              <span class="avatar av-sun">AP</span>
-            </div>
-            <div class="p-body" id="phone-body" aria-live="polite"></div>
-          </div>
-        </div>
-        <p class="caption">HP Bunda Rina. Ia hanya melihat data Alya — anak lain tidak pernah muncul di portalnya.</p>
-        <button type="button" class="reset" id="reset">Ulangi demo</button>
-      </div>
+      <div><h3>Dulu</h3><ul><li>Cocokkan transfer satu per satu di spreadsheet</li><li>Ingatkan orang tua satu-satu</li><li>Unggah foto ke Google Drive masing-masing siswa lalu kirim ke orang tua masing-masing</li><li>Tulis catatan di buku, salin ke Word, lalu cari lagi saat menyusun laporan</li></ul></div>
+      <div><h3>Dengan Classping</h3><ul><li>Tagihan dan bukti bayar terkumpul di portal</li><li>Pantau tagihan yang belum lunas di satu tempat</li><li>Bagikan foto dan laporan kepada keluarga siswa terkait</li><li>Catatan aktivitas tersimpan bersama foto siswa, siap dilihat kembali</li></ul></div>
     </div>
   </div>
 </section>
 
-<!-- ============ FOR PARENTS ============ -->
-<svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90V50C180 0 360 0 560 30C780 64 960 80 1160 46C1300 22 1380 20 1440 30V90Z" style="fill:var(--field)"/></svg>
-<section class="section parents" id="orang-tua">
+<section class="section demo-section" id="demo" aria-labelledby="demo-title">
   <div class="wrap">
-    <div class="parents-art" aria-hidden="true">
-      <svg viewBox="0 0 520 460">
-        <path d="M70 110C120 30 240 10 320 40C430 80 510 130 506 250C502 370 430 450 262 450C110 450 14 390 14 290C14 210 40 160 70 110Z" fill="#FBF8F3"/>
-        <use href="#il-phone" x="40" y="80" width="440" height="308"/>
-      </svg>
-    </div>
-    <div class="parents-copy">
-      <p class="eyebrow">Untuk orang tua &amp; wali</p>
-      <h2 style="font-size:clamp(32px,4vw,44px);margin-top:12px">Setiap langkah kecil, terasa lebih dekat.</h2>
-      <p class="lead" style="margin-top:12px">Jika sekolah si kecil memakai Classping, Ayah/Bunda mendapat portal sendiri untuk mengikuti hari anak dan mengurus SPP.</p>
-      <div class="benefits">
-        <div class="benefit"><span class="door-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></span><strong>Laporan harian</strong><span>Foto dan catatan guru tentang anak Anda.</span></div>
-        <div class="benefit"><span class="door-icon" style="background:var(--sun-soft);color:var(--warning)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span><strong>Pengingat yang sopan</strong><span>Tahu kapan SPP jatuh tempo, secara pribadi.</span></div>
-        <div class="benefit"><span class="door-icon" style="background:var(--mint-soft);color:var(--info)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg></span><strong>Unggah bukti bayar</strong><span>Langsung ke sekolah, tidak tenggelam di chat.</span></div>
-        <div class="benefit"><span class="door-icon" style="background:var(--peony);color:var(--peony-ink)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><strong>Privat untuk keluarga</strong><span>Anda hanya melihat data anak Anda sendiri.</span></div>
+    <div class="section-head"><p class="eyebrow">Coba alur singkat</p><h2 id="demo-title">Dari sekolah, sampai ke orang tua.</h2><p>Pilih salah satu contoh dan coba langkahnya. Simulasi ini memakai data contoh.</p></div>
+    <div class="demo-shell">
+      <div class="segmented demo-picker" role="group" aria-label="Pilih contoh alur">
+        <button type="button" data-scenario="aktivitas" aria-pressed="true" aria-controls="demo-aktivitas">Laporan aktivitas</button>
+        <button type="button" data-scenario="spp" aria-pressed="false" aria-controls="demo-spp">Tagihan SPP</button>
       </div>
-    </div>
-  </div>
-</section>
-<svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V40C1260 90 1080 90 880 60C660 28 480 20 280 50C160 68 80 70 0 56Z" style="fill:var(--field)"/></svg>
-
-<!-- ============ PORTAL WALI MURID (part of "Untuk orang tua") ============ -->
-<section class="section portal-wali" id="portal-wali">
-  <div class="wrap">
-    <!-- Portal Wali Murid: the guardian dashboard, sharing state with the school simulation above -->
-    <div id="demo-wali">
-      <div class="sub-head">
-        <p class="eyebrow">Portal Wali Murid</p>
-        <h3>Untuk Ayah, Bunda, dan wali</h3>
-        <p>Tampilan Portal Wali Murid milik Bunda Rina di laptop. Laporan dan pengingat yang Anda kirim dari <a href="#demo">Portal Sekolah</a> ikut muncul di sini.</p>
-      </div>
-
-      <div class="slider-bar">
-        <button type="button" class="sl-arrow" data-gslide="-1" aria-label="Menu wali murid sebelumnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
-        <div class="sl-info" aria-live="polite">
-          <span class="sl-count" id="g-count"></span>
-          <strong id="g-title"></strong>
-          <p id="g-desc"></p>
-        </div>
-        <button type="button" class="sl-arrow" data-gslide="1" aria-label="Menu wali murid berikutnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
-        <div class="sl-dots" id="g-dots" role="group" aria-label="Pilih menu wali murid"></div>
-      </div>
-
-      <div class="console">
-        <div class="c-head">
-          <div class="c-school">
-            <span class="avatar">HB</span>
-            <div><strong>TK Harapan Bangsa</strong><small>Tahun Ajaran 2026/2027</small></div>
+      <div id="demo-aktivitas" data-scenario-panel="aktivitas">
+        <p class="demo-intro">Foto dan siswa sudah dipilih. Coba ubah catatannya, lalu bagikan laporan.</p>
+        <div class="flow-grid">
+          <div class="flow-card">
+            <div class="flow-role"><span class="role-icon" aria-hidden="true">1</span>Di portal guru</div>
+            <h3>Bermain Clay</h3><p class="muted">Siswa yang ditandai: <strong>Alya</strong></p>
+            <label for="activity-note">Catatan untuk Alya</label><textarea id="activity-note" rows="3" maxlength="1000" required>Alya mencoba membentuk bola dari clay dan bangga menunjukkan hasilnya kepada guru.</textarea>
+            <button type="button" class="btn btn-primary" id="share-activity">Bagikan laporan →</button>
+            <p class="demo-status" id="activity-status" role="status" aria-live="polite"></p>
           </div>
-          <div class="c-school">
-            <span class="avatar av-peony">BR</span>
-            <div><strong>Bunda Rina</strong><small>Orang tua Alya</small></div>
-          </div>
-        </div>
-        <div class="c-layout">
-          <nav class="c-side" aria-label="Menu portal wali murid">
-            <span class="c-side-label">Menu wali murid</span>
-            <button type="button" data-gtab="akt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M19 15v4M17 17h4"/></svg>Aktivitas Alya</button>
-            <button type="button" data-gtab="spp"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="18" x="4" y="3" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>SPP &amp; Tagihan</button>
-            <span class="c-side-label">Lainnya</span>
-            <button type="button" data-gtab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M10 21v-5h4v5"/></svg>Profil Sekolah</button>
-            <button type="button" data-gtab="atur"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Pengaturan</button>
-          </nav>
-          <div class="c-main" id="g-main">
-          <div class="c-track" id="g-track">
-            <div class="c-body" id="g-akt">
-              <div class="c-greet"><div><span class="eyebrow">Dokumentasi sekolah</span><h3>Aktivitas Alya Putri</h3><p class="pane-desc">Foto dan cerita kegiatan yang dibagikan guru khusus untuk anak Anda.</p></div></div>
-              <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="g-q" type="search" placeholder="Cari aktivitas Alya…" aria-label="Cari aktivitas Alya"></label>
-              <div class="g-feed" id="g-feed"></div>
-            </div>
-            <div class="c-body" id="g-spp">
-              <div class="c-greet"><div><span class="eyebrow">Administrasi sekolah</span><h3>SPP &amp; Tagihan</h3><p class="pane-desc">Pantau tagihan, denda, dan riwayat pembayaran Alya.</p></div></div>
-              <div class="g-tools">
-                <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="g-bq" type="search" placeholder="Cari jenis tagihan atau kode tagihan…" aria-label="Cari tagihan"></label>
-                <select id="g-bs" aria-label="Filter status"><option value="">Semua status</option><option value="due">Belum dibayar</option><option value="paid">Lunas</option></select>
-              </div>
-              <div class="g-table" role="table" aria-label="Daftar tagihan Alya">
-                <div class="g-tr g-th" role="row"><span role="columnheader">Jenis tagihan</span><span role="columnheader">Jumlah</span><span role="columnheader">Jatuh tempo</span><span role="columnheader">Status</span><span role="columnheader" class="sr-col">Aksi</span></div>
-                <div id="g-bills"></div>
-              </div>
-            </div>
-            <div class="c-body" id="g-profil">
-              <div class="c-greet"><div><span class="eyebrow">Sekolah anak</span><h3>Profil Sekolah</h3><p class="pane-desc">Informasi resmi dan kontak TK Harapan Bangsa.</p></div></div>
-              <div class="g-school">
-                <span class="avatar" style="width:64px;height:64px;font-size:20px;border-radius:18px">HB</span>
-                <div><span class="badge b-paid">Terdaftar di Classping</span><strong>TK Harapan Bangsa</strong><small>No. Registrasi CP-2026-014 · Tahun Ajaran 2026/2027</small></div>
-              </div>
-              <div class="g-info">
-                <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg><span><small>Alamat</small><strong>Jl. Melati No. 12, Bandung</strong><em>Alamat sekolah</em></span></div>
-                <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg><span><small>Telepon</small><strong>(022) 123 4567</strong><em>Kontak sekolah</em></span></div>
-                <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 6L2 7"/></svg><span><small>Email</small><strong>halo@tkharapanbangsa.sch.id</strong><em>Kontak administrasi sekolah</em></span></div>
-                <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><small>Jam sekolah</small><strong>Senin–Jumat, 07.30–11.30</strong><em>Jam operasional sekolah</em></span></div>
-              </div>
-              <div class="g-about">
-                <div><strong>Tentang kami</strong><p>TK dan KB dengan 3 kelas, belajar lewat bermain di Bandung.</p></div>
-                <div><strong>Kontak terverifikasi</strong><p>Informasi di halaman ini dikelola langsung oleh administrator sekolah.</p></div>
-              </div>
-            </div>
-            <div class="c-body" id="g-atur">
-              <div class="c-greet"><div><span class="eyebrow">Profil &amp; akun</span><h3>Pengaturan</h3><p class="pane-desc">Perbarui detail siswa dan wali murid yang terhubung ke akun Anda.</p></div></div>
-              <div class="g-panel">
-                <span class="eyebrow">Data anak</span>
-                <strong class="g-panel-title">Profil Alya</strong>
-                <p class="pane-desc">Perbarui informasi siswa yang terhubung ke akun wali.</p>
-                <div class="if-grid g-form">
-                  <label>Nama depan<input id="ga-first" type="text" value="Alya"></label>
-                  <label>Nama belakang<input type="text" value="Putri"></label>
-                  <label>Nama panggilan<input type="text" value="Alya"></label>
-                  <label>Tanggal lahir<input type="date" value="2021-05-12"></label>
-                  <label>Jenis kelamin<select><option>Perempuan</option><option>Laki-laki</option></select></label>
-                </div>
-                <div class="g-panel-foot"><p class="toast" id="ga-toast" role="status" aria-live="polite"></p><button type="button" class="btn btn-primary btn-sm" id="ga-save">Simpan profil siswa</button></div>
-              </div>
-              <div class="g-panel">
-                <div class="c-greet" style="margin-bottom:6px"><div><span class="eyebrow">Data wali</span><strong class="g-panel-title">Wali murid terhubung</strong><p class="pane-desc">Semua wali yang terhubung ditampilkan. Anda hanya dapat mengubah profil Anda sendiri.</p></div><button type="button" class="btn btn-sm" id="gw-open">+ Tambah wali murid</button></div>
-                <div class="inline-form" id="gw-form" hidden>
-                  <strong class="if-title">Wali murid baru</strong>
-                  <p class="if-note" style="margin:0 0 10px">Informasi login akan dikirim ke email wali yang didaftarkan.</p>
-                  <div class="if-grid">
-                    <label>Nama<input id="gw-name" type="text" autocomplete="off" placeholder="Misalnya: Ayah Budi"></label>
-                    <label>Hubungan<select id="gw-rel"><option>Ayah</option><option>Ibu</option><option>Kakek</option><option>Nenek</option><option>Wali lain</option></select></label>
-                    <label>Email<input id="gw-email" type="email" autocomplete="off" placeholder="ayah.budi@email.com"></label>
-                  </div>
-                  <div class="if-actions"><button type="button" class="btn btn-sm" id="gw-cancel">Batal</button><button type="button" class="btn btn-sm btn-primary" id="gw-save">Tambah wali</button></div>
-                </div>
-                <div class="rows" id="gw-rows"></div>
-                <p class="toast" id="gw-toast" role="status" aria-live="polite"></p>
-              </div>
-            </div>
-          </div>
+          <div class="flow-card result">
+            <div class="flow-role"><span class="role-icon" aria-hidden="true">2</span>Di portal orang tua</div>
+            <div id="parent-placeholder" class="result-placeholder"><p>Setelah dibagikan, foto dan catatan guru muncul di portal wali Alya.</p></div>
+            <div class="result-content" id="parent-activity" hidden><p class="eyebrow">Aktivitas Alya</p><h4>Bermain Clay</h4><p id="parent-note"></p><small>Laporan dibagikan kepada keluarga siswa yang terkait.</small></div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="wali-actions">
-      <a class="btn btn-primary" href="https://guardian.theclassping.com">Masuk Portal Wali Murid</a>
-      <div class="ask">
-        <p><strong>Sekolah si kecil belum memakai Classping?</strong> Ceritakan ke kepala sekolah — kami siap membantu.</p>
-        <a class="btn btn-sm" style="min-height:44px" href="https://wa.me/?text=Bu%2FPak%2C%20ada%20portal%20sekolah%20untuk%20SPP%20dan%20laporan%20harian%20anak%3A%20https%3A%2F%2Ftheclassping.com">Bagikan lewat WhatsApp</a>
+      <div id="demo-spp" data-scenario-panel="spp" hidden>
+        <p class="demo-intro">Contoh pembayaran lewat transfer bank: unggah bukti bayar, lalu periksa sebagai staf sekolah.</p>
+        <div class="flow-grid">
+          <div class="flow-card">
+            <div class="flow-role"><span class="role-icon" aria-hidden="true">1</span>Staf sekolah</div>
+            <h3>Tagihan SPP Alya</h3><p class="muted">SPP November · data contoh</p>
+            <div class="invoice"><span class="badge" data-payment-badge>Belum dibayar</span><strong>Rp 250.000</strong><p id="payment-proof" hidden>Bukti transfer contoh sudah diterima dan menunggu pemeriksaan.</p></div>
+            <div class="payment-steps" aria-label="Tahapan pembayaran"><span data-payment-step>1 · Belum dibayar</span><span data-payment-step>2 · Diperiksa sekolah</span><span data-payment-step>3 · Lunas</span></div>
+          </div>
+          <div class="flow-card result">
+            <div class="flow-role"><span class="role-icon" aria-hidden="true">2</span>Orang tua Alya</div>
+            <span class="badge" data-payment-badge>Belum dibayar</span><p id="payment-parent-note" style="margin-top:14px"></p>
+            <div aria-live="polite" aria-atomic="true"><p class="eyebrow" id="payment-role" style="margin-top:20px"></p><p id="payment-message" style="margin-top:8px"></p></div>
+            <button type="button" class="btn btn-primary" id="payment-action">Simulasikan unggah bukti bayar</button>
+            <p id="payment-receipt" class="demo-status" hidden>Bukti pembayaran tersedia setelah verifikasi sekolah. Tidak ada transaksi sungguhan dalam contoh ini.</p>
+          </div>
+        </div>
       </div>
+      <div class="demo-foot"><span>Sudah mendapat gambaran?</span><button type="button" class="text-button" id="demo-reset">Ulangi contoh</button></div>
     </div>
+    <aside class="parent-note" id="orang-tua"><span aria-hidden="true">↗</span><p><strong>Orang tua ikut terhubung, tanpa memasang aplikasi.</strong> Portal dibuka lewat browser di HP untuk melihat kabar anak, mengecek tagihan, dan mengunggah bukti bayar.</p></aside>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
-<section class="section" id="tanya">
+<section class="section migration" id="mulai" aria-labelledby="migration-title">
+  <div class="wrap migration-grid">
+    <div class="migration-copy"><p class="eyebrow">Mulai dengan bantuan tim kami</p><h2 id="migration-title">Data siswa sudah ada di spreadsheet? Kami bantu pindahkan.</h2><p>Tim admin Classping membantu migrasi data siswa dari spreadsheet sekolah ke sistem. Anda tidak perlu memasukkan ulang seluruh data siswa satu per satu.</p></div>
+    <ol class="onboarding">
+      <li><span class="number">1</span><div><h3>Ceritakan alur sekolah</h3><p>Saat demo, kita bahas cara sekolah mengelola SPP dan laporan aktivitas.</p></div></li>
+      <li><span class="number">2</span><div><h3>Siapkan spreadsheet siswa</h3><p>Tim kami membantu memeriksa dan memindahkan data siswa ke Classping.</p></div></li>
+      <li><span class="number">3</span><div><h3>Mulai mencatat di satu tempat</h3><p>Staf mengelola tagihan, guru menyusun aktivitas. Foto dan catatan tersimpan untuk dilihat kembali saat dibutuhkan.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="tanya" aria-labelledby="faq-title">
   <div class="wrap">
-    <div class="section-head"><p class="eyebrow">Tanya jawab</p><h2>Yang sering ditanyakan.</h2></div>
+    <div class="section-head"><p class="eyebrow">Tanya jawab</p><h2 id="faq-title">Sebelum sekolah mulai.</h2></div>
     <div class="faq">
-      <details><summary>Berapa biaya Classping untuk sekolah?</summary><p>Sekolah yang bergabung di Program Sekolah Naik Level gratis selama 6 bulan, lalu mendapat harga khusus selama 1 tahun. Harga normal: [ISI HARGA].</p></details>
-      <details><summary>Apa itu Program Sekolah Naik Level?</summary><p>Program uji coba untuk 3–5 PAUD, KB, atau TK pertama yang memakai Classping, dengan maksimal 100 siswa per sekolah. Sekolah peserta memakai Classping gratis 6 bulan, mendapat ruang simpan foto dan video 50 GB, dan ikut memberi masukan langsung untuk pengembangan fitur. Saat ini 1 sekolah sudah bergabung.</p></details>
+      <details><summary>Berapa biaya Classping untuk sekolah?</summary><p>Biaya dihitung per semester sesuai jumlah siswa: Rp1,5 juta untuk sekolah dengan hingga 25 siswa, Rp2,5 juta untuk 26–50 siswa, dan Rp5 juta untuk 51–100 siswa. Sekolah yang bergabung di Program Sekolah Naik Level gratis selama 6 bulan pertama.</p></details>
+      <details><summary>Apakah tim Classping membantu memindahkan data siswa?</summary><p>Ya. Jika sekolah sudah memiliki data siswa dalam spreadsheet, tim admin Classping akan membantu migrasi data tersebut ke sistem.</p></details>
       <details><summary>Apakah orang tua perlu memasang aplikasi?</summary><p>Tidak. Portal Wali Murid dibuka lewat browser di HP, tanpa perlu memasang aplikasi.</p></details>
-      <details><summary>Siapa yang bisa melihat foto anak saya?</summary><p>Setiap keluarga hanya melihat data anaknya sendiri. Foto hanya muncul untuk keluarga dari anak yang ditandai guru.</p></details>
-      <details><summary>Bagaimana orang tua membayar SPP?</summary><p>Tergantung pilihan sekolah. Jika sekolah berlangganan fitur pembayaran otomatis, orang tua membayar langsung di Classping. Jika tidak, orang tua membayar seperti biasa di luar Classping, misalnya lewat transfer bank, lalu mengunggah bukti bayarnya di portal.</p></details>
+      <details><summary>Siapa yang bisa melihat laporan aktivitas siswa?</summary><p>Laporan dan foto dibagikan kepada keluarga siswa yang terkait. Setiap keluarga masuk melalui akun Portal Wali Murid masing-masing.</p></details>
+      <details><summary>Bagaimana orang tua membayar SPP?</summary><p>Orang tua dapat membayar seperti biasa lewat transfer bank, lalu mengunggah bukti bayar di portal. Staf sekolah memeriksa bukti tersebut sebelum tagihan dinyatakan lunas.</p></details>
     </div>
   </div>
 </section>
 
-<!-- ============ PROGRAM SEKOLAH NAIK LEVEL ============ -->
-<section class="section naik-level-section">
+<section class="section pilot-section" id="naik-level" aria-labelledby="pilot-title">
   <div class="wrap">
-    <!-- Campaign: founding-school pilot (6 months free, 3–5 schools, 1 joined) -->
-    <div class="pilot" id="naik-level">
-      <div style="position:relative;z-index:1">
-        <p class="eyebrow" style="color:var(--field-eyebrow)">Program Sekolah Naik Level</p>
-        <h3>6 bulan gratis untuk sekolah yang naik level ke digital.</h3>
-        <p class="pilot-lead">Untuk 3–5 PAUD, KB, dan TK yang siap beralih dari spreadsheet dan grup WhatsApp ke cara digital.</p>
-
-        <div class="quota">
-          <div class="slots" role="img" aria-label="1 dari 5 tempat sudah terisi">
-            <span class="on"></span><span></span><span></span><span class="maybe"></span><span class="maybe"></span>
-          </div>
-          <p><strong>1 sekolah sudah bergabung.</strong> Tersisa 2–4 tempat.</p>
-        </div>
-
-        <ul class="perks">
-          <li><strong>6 bulan gratis</strong>Pakai Classping sepenuhnya, untuk semua kelas.</li>
-          <li><strong>Harga khusus 1 tahun</strong>Berlaku setelah masa gratis berakhir.</li>
-          <li><strong>Masukan Anda didengar</strong>Langsung ke tim, untuk fitur berikutnya.</li>
-          <li><strong>50 GB foto &amp; video</strong>Ruang simpan selama masa uji coba.</li>
-        </ul>
-        <p class="criteria">Syarat: PAUD, KB, atau TK dengan maksimal 100 siswa.</p>
-
-        <ol>
-          <li><b>1</b><span><strong>Daftar</strong>Isi formulir, atau WhatsApp kami dengan kata "NAIK LEVEL".</span></li>
-          <li><b>2</b><span><strong>Demo 20 menit</strong>Kami pahami cara sekolah Anda menagih SPP dan berbagi kabar.</span></li>
-          <li><b>3</b><span><strong>Mulai bersama</strong>Kami bantu siapkan data murid dan biaya, lalu kita tinjau hasilnya bersama.</span></li>
-        </ol>
+    <div class="pilot">
+      <div class="pilot-copy">
+        <p class="eyebrow">Program Sekolah Naik Level</p><span class="availability">4 tempat tersisa</span>
+        <h2 id="pilot-title">Mulai bersama Classping, gratis 6 bulan.</h2>
+        <p>Untuk sekolah yang ingin merapikan administrasi dan mengurangi pekerjaan berulang, supaya guru bisa lebih fokus pada siswa.</p>
+        <ul class="pilot-perks"><li><strong>6 bulan gratis</strong>Gunakan Classping untuk semua kelas.</li><li><strong>Harga khusus 1 tahun</strong>Setelah masa gratis berakhir.</li><li><strong>Bantuan migrasi data</strong>Dari spreadsheet siswa sekolah.</li><li><strong>50 GB penyimpanan</strong>Foto dan video selama masa uji coba.</li></ul>
+        <div class="price-tiers" aria-labelledby="price-title"><p class="price-title" id="price-title">Biaya per semester, setelah 6 bulan gratis</p><ul><li><span>Hingga 25 siswa</span><strong>Rp1,5 jt</strong></li><li><span>26–50 siswa</span><strong>Rp2,5 jt</strong></li><li><span>51–100 siswa</span><strong>Rp5 jt</strong></li></ul></div>
+        <p class="pilot-proof"><span aria-hidden="true">★</span><span><strong>TK. PGRI An-Nahl Sukabumi</strong> siap naik level bersama Classping mulai Januari 2027.</span></p>
+        <a class="btn btn-sun btn-wa" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l-4 3 1.5-6A8.5 8.5 0 1 1 21 11.5Z"/></svg>Tanya Sekolah Naik Level di WhatsApp</a>
+        <p class="pilot-fine">Untuk PAUD, KB, TK, dan Daycare dengan maksimal 100 siswa.</p>
       </div>
-      <form class="form" id="jadwalkan-demo" data-contact-form novalidate>
-        <h4>Daftar Sekolah Naik Level</h4>
-        <p>Kami hubungi Anda untuk demo singkat. Balasan lewat email dalam 1 hari kerja.</p>
-        <input type="hidden" name="_subject" value="Website Classping: pendaftaran Sekolah Naik Level / demo">
+      <form class="contact-form" id="jadwalkan-demo" data-contact-form>
+        <h3>Yuk, lihat Classping bersama.</h3>
+        <p>Dalam demo sekitar 20 menit, ceritakan kebutuhan sekolah Anda. Kami tunjukkan cara mengelola SPP dan menyusun laporan aktivitas di Classping.</p>
+        <input type="hidden" name="_subject" value="Website Classping: permintaan jadwal demo">
         <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
-        <label for="f-name">Nama Anda</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required>
-        <label for="f-school">Nama sekolah</label>
-        <input id="f-school" name="school" type="text" autocomplete="organization">
-        <label for="f-email">Email</label>
-        <input id="f-email" name="email" type="email" autocomplete="email" required>
-        <label for="f-msg">Pesan</label>
-        <textarea id="f-msg" name="message" required placeholder="Misalnya: ada 3 kelas, SPP masih dicatat di Excel."></textarea>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" hidden>
+        <label for="f-name">Nama Anda</label><input id="f-name" name="name" type="text" autocomplete="name" required>
+        <label for="f-school">Nama sekolah</label><input id="f-school" name="school" type="text" autocomplete="organization" required>
+        <label for="f-email">Email untuk mengatur jadwal</label><input id="f-email" name="email" type="email" autocomplete="email" required>
+        <details><summary>Tambahkan kebutuhan sekolah (opsional)</summary><label for="f-msg">Apa yang ingin dibahas saat demo?</label><textarea id="f-msg" name="message" placeholder="Misalnya: SPP masih dicatat di Excel, atau laporan aktivitas masih disusun di Word."></textarea></details>
         <p class="status" role="status" aria-live="polite"></p>
-        <button class="btn btn-primary" type="submit" style="width:100%">Kirim pendaftaran</button>
-        <a class="wa" href="https://wa.me/6285158611200?text=NAIK%20LEVEL%20%E2%80%94%20Halo%20Classping%2C%20sekolah%20kami%20tertarik%20dengan%20Program%20Sekolah%20Naik%20Level.">Lebih suka chat? WhatsApp +62 851 5861 1200</a>
+        <button class="btn btn-primary submit" type="submit">Minta jadwal demo</button>
+        <p class="form-note">Kami hubungi lewat email dalam 1 hari kerja untuk mencocokkan jadwal.</p>
+        <a class="wa-link" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener">Lebih nyaman chat? Hubungi kami lewat WhatsApp →</a>
       </form>
     </div>
   </div>
 </section>
 </main>
-
 <footer class="foot">
-  <div class="wrap">
-    <div>
-      <a class="logo" href="#atas" aria-label="Classping, ke atas">
-        <svg width="34" height="34" aria-hidden="true"><use href="#logo-mark"/></svg>
-        <span style="font-size:22px">classping</span>
-      </a>
-      <p>Kelola administrasi dan aktivitas sekolah untuk PAUD, TK, dan daycare.</p>
-    </div>
-    <div class="foot-links">
-      <a class="btn btn-sm" style="min-height:44px" href="https://school.theclassping.com">Masuk Portal Sekolah</a>
-      <a class="btn btn-sm" style="min-height:44px" href="https://guardian.theclassping.com">Masuk Portal Wali Murid</a>
-    </div>
-    <div class="foot-bottom">© 2026 Classping · Tumbuh bersama, setiap hari.</div>
-  </div>
+  <div class="wrap"><div><a class="logo" href="#atas" aria-label="Classping, ke atas"><svg aria-hidden="true"><use href="#logo-mark"/></svg><span>classping</span></a><p>Administrasi sekolah dan kabar anak, terhubung di satu tempat.</p><p>© 2026 Classping · Tumbuh bersama, setiap hari.</p></div><div class="foot-links"><a href="https://school.theclassping.com">Masuk Portal Sekolah</a><a href="https://guardian.theclassping.com">Masuk Portal Wali Murid</a></div></div>
 </footer>
-
-<a class="wa-float" href="https://wa.me/6285158611200" aria-label="Chat WhatsApp dengan Classping">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span>Tanya lewat WhatsApp</span>
-</a>
-
-<script>
-(function () {
-  var ACTS = [
-    { id: 'tanam', time: '10.30', cat: 'Alam', title: 'Menanam kacang hijau', text: 'Setiap anak menanam satu biji dan akan menyiraminya setiap pagi.', ph: 'ph-green', il: 'plant' },
-    { id: 'nyanyi', time: '13.00', cat: 'Musik', title: 'Bernyanyi bersama', text: 'Lagu baru tentang nama-nama hari, sambil bertepuk tangan.', ph: 'ph-mint', il: 'music' },
-    { id: 'cerita', time: '14.00', cat: 'Literasi', title: 'Membaca cerita', text: 'Bu guru membacakan cerita kancil, lalu anak-anak menebak akhirnya.', ph: 'ph-sun', il: 'book' }
-  ];
-  function art(name) { return '<svg viewBox="0 0 200 140" aria-hidden="true"><use href="#il-' + name + '"/></svg>'; }
-  var BASE_KIDS = [
-    { id: 'alya', name: 'Alya Putri', short: 'AP', cls: 'A1 · Matahari', av: 'av-sun', nis: 26001 },
-    { id: 'raka', name: 'Raka Aditya', short: 'RA', cls: 'B1 · Bintang', av: 'av-peony', nis: 26002 },
-    { id: 'nayla', name: 'Nayla Zahra', short: 'NZ', cls: 'A2 · Pelangi', av: 'av-mint', nis: 26003 }
-  ];
-  var KIDS = BASE_KIDS.slice();
-  // Students not shown in the lists (5 of them, 4 already paid this month)
-  var HIDDEN_KIDS = 5, HIDDEN_PAID = 4, HIDDEN_BY_CLASS = { 'A1 · Matahari': 2, 'A2 · Pelangi': 2, 'B1 · Bintang': 1 };
-  var BASE_FEES = [
-    { name: 'SPP bulanan', amt: 250000, rec: 'Setiap bulan' },
-    { name: 'Seragam', amt: 300000, rec: 'Sekali' },
-    { name: 'Wisata kebun binatang', amt: 150000, rec: 'Sekali' },
-    { name: 'Outing class', amt: 50000, rec: 'Sekali' }
-  ];
-  var MENU_NAME = { siswa: 'Data Siswa', akt: 'Laporan Aktivitas', spp: 'Pembayaran', atur: 'Pengaturan', profil: 'Profil Sekolah' };
-  function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
-  function rupiah(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
-  var LABEL = { due: ['Belum dibayar', 'b-due'], reminded: ['Diingatkan', 'b-remind'], proof: ['Bukti diterima', 'b-proof'], paid: ['Lunas', 'b-paid'] };
-  // auto: school subscribes to automatic payments (parents pay in Classping, verified instantly)
-  // manual: parents pay outside Classping and upload proof for the school to check
-  var mode = 'auto';
-  var MODE_NOTE = {
-    auto: 'Orang tua membayar langsung di Classping dan pembayarannya langsung terverifikasi. Sekolah tidak perlu mengecek bukti transfer.',
-    manual: 'Orang tua membayar di luar Classping, misalnya lewat transfer bank, lalu mengunggah bukti bayar untuk dicek sekolah.'
-  };
-  var s;
-  function fresh() {
-    var pay = mode === 'auto' ? { alya: 'due', raka: 'reminded', nayla: 'paid' } : { alya: 'due', raka: 'proof', nayla: 'paid' };
-    s = { pay: pay, act: 'tanam', tags: { alya: true, raka: true, nayla: false }, posted: [], flash: null,
-      fees: BASE_FEES.slice(), sub: 'staf', addingKid: false, addingFee: false, kidAdded: false, feeAdded: false, newRow: null,
-      walis: [{ name: 'Bunda Rina', rel: 'Ibu', you: true }], addingWali: false };
-    KIDS = BASE_KIDS.slice();
-  }
-  var $ = function (id) { return document.getElementById(id); };
-
-  function paidCount() { var n = HIDDEN_PAID; for (var k in s.pay) if (s.pay[k] === 'paid') n++; return n; }
-
-  // Each sidebar menu is separate, so each gets its own guide steps
-  var tab = 'spp';
-  function step() {
-    if (tab === 'akt') return s.posted.length ? 3 : s.tagTouched ? 2 : s.actTouched ? 1 : 0;
-    if (tab === 'siswa') return s.kidAdded ? 3 : s.addingKid ? 1 : 0;
-    if (tab === 'atur') return s.feeAdded ? 3 : s.addingFee ? 2 : s.sub === 'biaya' ? 1 : 0;
-    var a = s.pay.alya;
-    if (a === 'due') return 0;
-    if (a === 'reminded') return 1;
-    if (a === 'proof') return 2;
-    return 3;
-  }
-
-  function renderSteps() {
-    var cur = step();
-    var items = tab === 'akt' ? ['Pilih aktivitas', 'Tandai anak yang ikut', 'Kirim laporan']
-      : tab === 'siswa' ? ['Klik Tambah Siswa', 'Isi nama dan kelas', 'Simpan siswa']
-      : tab === 'atur' ? ['Buka Jenis Biaya', 'Klik + Jenis Biaya', 'Isi lalu simpan']
-      : mode === 'auto'
-        ? ['Kirim pengingat ke Alya', 'Bayar dari HP Bunda', 'Lunas otomatis']
-        : ['Kirim pengingat ke Alya', 'Unggah bukti dari HP Bunda', 'Konfirmasi lunas'];
-    document.querySelector('.mode').hidden = tab !== 'spp';
-    document.querySelectorAll('[data-mode]').forEach(function (btn) { btn.setAttribute('aria-pressed', btn.dataset.mode === mode); });
-    $('mode-note').textContent = MODE_NOTE[mode];
-    $('steps').hidden = tab === 'profil';
-    var menu = MENU_NAME[tab];
-    $('steps').setAttribute('aria-label', 'Langkah menu ' + menu);
-    $('steps').innerHTML = '<li class="steps-menu">Menu ' + menu + '</li>' + items.map(function (t, i) {
-      var cls = i < cur ? 'done' : i === cur ? 'on' : '';
-      return '<li class="' + cls + '"' + (i === cur ? ' aria-current="step"' : '') + '><b>' + (i < cur ? '✓' : i + 1) + '</b>' + t + '</li>';
-    }).join('');
-  }
-
-  function renderRows() {
-    $('pay-rows').innerHTML = KIDS.map(function (k) {
-      var st = s.pay[k.id], lb = LABEL[st], act = '';
-      if (st === 'due') act = '<button type="button" class="btn btn-sm btn-primary" data-pay="remind" data-kid="' + k.id + '">Kirim pengingat</button>';
-      else if (st === 'reminded') act = '<button type="button" class="btn btn-sm" disabled>Pengingat terkirim</button>';
-      else if (st === 'proof') act = '<button type="button" class="btn btn-sm btn-primary" data-pay="confirm" data-kid="' + k.id + '">Konfirmasi lunas</button>';
-      else act = '<span style="font-size:13px;color:var(--muted)">Selesai</span>';
-      return '<div class="row' + (k.id === 'alya' ? ' you' : '') + '"><div class="stu"><span class="avatar ' + k.av + '">' + esc(k.short) + '</span><div><strong>' + esc(k.name) + '</strong><small>' + k.cls + ' · SPP Oktober · Rp 250.000</small>' + (k.id === 'alya' ? '<small class="you-tag">Anak Bunda Rina</small>' : '') + '</div></div><span class="badge ' + lb[1] + '">' + lb[0] + '</span><div class="act">' + act + '</div></div>';
-    }).join('');
-    var n = paidCount(), total = HIDDEN_KIDS + KIDS.length;
-    $('paid-count').textContent = n + ' dari ' + total;
-    $('paid-bar').style.width = (n / total * 100) + '%';
-  }
-
-  function renderSiswa() {
-    $('kid-rows').innerHTML = KIDS.map(function (k) {
-      return '<div class="lrow' + (s.newRow === k.id ? ' is-new' : '') + '"><span class="stu"><span class="avatar ' + k.av + '">' + esc(k.short) + '</span><span><strong>' + esc(k.name) + '</strong><small>NIS ' + k.nis + ' · ' + k.cls + '</small></span></span><span class="badge b-paid">Aktif</span></div>';
-    }).join('');
-    $('kid-form').hidden = !s.addingKid;
-    $('kid-open').hidden = s.addingKid;
-    $('kid-nis').value = 26001 + KIDS.length;
-  }
-
-  function renderAtur() {
-    document.querySelectorAll('[data-sub]').forEach(function (btn) { btn.setAttribute('aria-pressed', btn.dataset.sub === s.sub); });
-    ['staf', 'kelas', 'biaya'].forEach(function (k) { $('atur-' + k).hidden = s.sub !== k; });
-    $('kelas-rows').innerHTML = Object.keys(HIDDEN_BY_CLASS).map(function (c) {
-      var n = HIDDEN_BY_CLASS[c] + KIDS.filter(function (k) { return k.cls === c; }).length;
-      return '<div class="lrow"><span class="stu"><span class="avatar">' + c.slice(0, 2) + '</span><span><strong>' + c.split(' · ')[1] + '</strong><small>Kelas ' + c.slice(0, 2) + '</small></span></span><span class="badge">' + n + ' siswa</span></div>';
-    }).join('');
-    $('fee-rows').innerHTML = s.fees.map(function (f, i) {
-      return '<div class="lrow' + (s.newRow === 'fee' + i ? ' is-new' : '') + '"><span><strong>' + esc(f.name) + '</strong><small>' + rupiah(f.amt) + ' · ' + f.rec + '</small></span><span class="badge b-paid">Aktif</span></div>';
-    }).join('');
-    $('fee-form').hidden = !s.addingFee;
-    $('fee-open').hidden = s.addingFee;
-  }
-
-  function renderCompose() {
-    $('act-chips').innerHTML = ACTS.map(function (a) {
-      return '<button type="button" class="chip" data-act="' + a.id + '" aria-pressed="' + (s.act === a.id) + '">' + a.title + '</button>';
-    }).join('');
-    var a = ACTS.filter(function (x) { return x.id === s.act; })[0];
-    $('act-preview').innerHTML = '<div class="photo ' + a.ph + '">' + art(a.il) + '</div><div><span class="p-label">' + a.time + ' · ' + a.cat + '</span><h4>' + a.title + '</h4><p>' + a.text + '</p></div>';
-    $('tag-chips').innerHTML = KIDS.map(function (k) {
-      return '<button type="button" class="chip" data-tag="' + k.id + '" aria-pressed="' + !!s.tags[k.id] + '"><span class="avatar ' + k.av + '">' + k.short + '</span>' + k.name + '</button>';
-    }).join('');
-    var done = s.posted.some(function (p) { return p.a.id === s.act; });
-    $('post-btn').disabled = done;
-    $('post-btn').firstChild.textContent = done ? 'Sudah terkirim ' : 'Kirim laporan ';
-  }
-
-  function payCard() {
-    var st = s.pay.alya, f = s.flash === 'pay' ? ' is-new ping' : '';
-    var thanks = mode === 'auto' ? 'Terima kasih, Bunda. Pembayaran berhasil dan langsung tercatat di sekolah.' : 'Terima kasih, Bunda. Pembayaran sudah dikonfirmasi sekolah.';
-    if (st === 'paid') return '<div class="p-card p-pay is-paid' + f + '"><div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--ink);font-size:14px">SPP Oktober</strong><span class="badge b-paid">Lunas</span></div><span class="amount">Rp 250.000</span><p>' + thanks + '</p></div>';
-    if (st === 'proof') return '<div class="p-card p-pay' + f + '"><div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--ink);font-size:14px">SPP Oktober</strong><span class="badge b-proof">Menunggu konfirmasi</span></div><span class="amount">Rp 250.000</span><p>Bukti bayar sudah terkirim ke sekolah.</p></div>';
-    var head = st === 'reminded' ? '<p style="color:var(--ink);font-weight:600">Pengingat: SPP Oktober jatuh tempo 10 Okt. Abaikan jika sudah membayar.</p>' : '';
-    return '<div class="p-card p-pay' + f + '">' + head + '<div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--ink);font-size:14px">SPP Oktober</strong><span class="badge b-due">Belum dibayar</span></div><span class="amount">Rp 250.000</span><p>Jatuh tempo 10 Okt</p>' + (mode === 'auto'
-      ? '<button type="button" class="btn btn-sm btn-primary" data-pay="pay" style="width:100%;min-height:44px"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>Bayar sekarang</button>'
-      : '<button type="button" class="btn btn-sm btn-primary" data-pay="upload" style="width:100%;min-height:44px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>Unggah bukti bayar</button>') + '</div>';
-  }
-
-  function actCard(a, isNew) {
-    return '<div class="p-card' + (isNew ? ' is-new ping' : '') + '"><div class="photo ' + a.ph + '" style="height:110px">' + art(a.il) + '</div><span class="p-label" style="letter-spacing:.04em">' + a.time + ' · ' + a.cat + '</span><h4>' + a.title + '</h4><p>' + a.text + '</p></div>';
-  }
-
-  function renderPhone() {
-    var feed = s.posted.filter(function (p) { return p.alya; }).slice().reverse();
-    var html = payCard() + '<span class="p-label">Aktivitas hari ini · Alya</span>';
-    html += feed.map(function (p, i) { return actCard(p.a, i === 0 && s.flash === 'act'); }).join('');
-    html += actCard({ time: '09.00', cat: 'Seni', title: 'Melukis dengan jari', text: 'Alya belajar mencampur warna primer jadi warna baru.', ph: 'ph-peony', il: 'paint' }, false);
-    $('phone-body').innerHTML = html;
-  }
-
-  function render() {
-    var flash = s.flash;
-    renderSteps(); renderRows(); renderSiswa(); renderAtur(); renderCompose(); renderPhone(); renderGuardian(); s.flash = null; s.newRow = null;
-    // On stacked layouts the phone sits below the console: bring the update into view
-    if (flash && window.matchMedia('(max-width: 960px)').matches) {
-      var card = document.querySelector('#phone-body .is-new');
-      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }
-
-  // Slides follow the dashboard sidebar order; the sidebar, arrows, dots and swipe all move the same slider
-  var ORDER = ['siswa', 'akt', 'spp', 'profil', 'atur'];
-  var SLIDE_DESC = {
-    siswa: 'Data siswa dan wali tersimpan rapi di satu tempat.',
-    akt: 'Foto dan catatan harian, hanya untuk keluarga dari anak yang ditandai.',
-    spp: 'Tagih SPP, kirim pengingat, dan pantau siapa yang sudah lunas.',
-    profil: 'Identitas sekolah dan tahun ajaran aktif.',
-    atur: 'Atur guru, staf, kelas, dan jenis biaya sekolah.'
-  };
-  $('sl-dots').innerHTML = ORDER.map(function (k) { return '<button type="button" data-tab="' + k + '">' + MENU_NAME[k] + '</button>'; }).join('');
-
-  function fitHeight() { $('c-main').style.height = $('pane-' + tab).offsetHeight + 'px'; }
-
-  function setTab(t) {
-    tab = t;
-    var i = ORDER.indexOf(t);
-    document.querySelectorAll('.c-side [data-tab]').forEach(function (btn) {
-      if (btn.dataset.tab === t) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
-    });
-    document.querySelectorAll('#sl-dots [data-tab]').forEach(function (btn) { btn.setAttribute('aria-current', btn.dataset.tab === t); });
-    ORDER.forEach(function (k, j) {
-      var pane = $('pane-' + k);
-      pane.style.order = j;
-      pane.inert = k !== t;
-      pane.setAttribute('aria-hidden', k !== t);
-    });
-    $('c-track').style.transform = 'translateX(' + (-i * 100) + '%)';
-    $('sl-count').textContent = 'Fitur ' + (i + 1) + ' dari ' + ORDER.length;
-    $('sl-title').textContent = MENU_NAME[t];
-    $('sl-desc').textContent = SLIDE_DESC[t];
-    fitHeight();
-    renderSteps();
-  }
-
-  function slide(dir) { setTab(ORDER[(ORDER.indexOf(tab) + dir + ORDER.length) % ORDER.length]); }
-
-  // Keep the viewport height in step with the active slide (forms opening, rows added)
-  if (window.ResizeObserver) {
-    var ro = new ResizeObserver(fitHeight);
-    ORDER.forEach(function (k) { ro.observe($('pane-' + k)); });
-  }
-
-  // Swipe between slides on touch screens
-  var startX = null, startY = 0;
-  $('c-main').addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') { startX = e.clientX; startY = e.clientY; } });
-  $('c-main').addEventListener('pointerup', function (e) {
-    if (startX === null) return;
-    var dx = e.clientX - startX, dy = e.clientY - startY;
-    startX = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) slide(dx < 0 ? 1 : -1);
-  });
-
-  document.addEventListener('click', function (e) {
-    var b = e.target.closest('button');
-    if (!b) return;
-    if (b.dataset.tab) { setTab(b.dataset.tab); return; }
-    if (b.dataset.slide) { slide(Number(b.dataset.slide)); return; }
-    if (b.dataset.gtab) { setGTab(b.dataset.gtab); return; }
-    if (b.dataset.gslide) { gSlide(Number(b.dataset.gslide)); return; }
-    if (b.id === 'ga-save') { $('ga-toast').textContent = 'Profil ' + ($('ga-first').value.trim() || 'siswa') + ' tersimpan.'; return; }
-    if (b.id === 'gw-open') { s.addingWali = true; $('gw-toast').textContent = ''; renderGuardian(); $('gw-name').focus(); return; }
-    if (b.id === 'gw-cancel') { s.addingWali = false; renderGuardian(); return; }
-    if (b.id === 'gw-save') {
-      var wname = $('gw-name').value.trim(), wmail = $('gw-email').value.trim();
-      if (!wname || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wmail)) { $('gw-toast').className = 'toast warn'; $('gw-toast').textContent = 'Isi nama dan email yang valid.'; return; }
-      s.walis = s.walis.concat([{ name: wname, rel: $('gw-rel').value, email: wmail }]);
-      s.addingWali = false; $('gw-name').value = ''; $('gw-email').value = '';
-      $('gw-toast').className = 'toast'; $('gw-toast').textContent = 'Informasi login dikirim ke ' + wmail + '.';
-      renderGuardian(); return;
-    }
-    if (b.dataset.mode) {
-      if (b.dataset.mode === mode) return;
-      mode = b.dataset.mode; fresh(); $('pay-toast').textContent = ''; $('act-toast').textContent = ''; setTab('spp');
-      render(); return;
-    }
-    // Payments can start from the phone or from the guardian dashboard; only the phone moves the school slider
-    var fromWali = !!b.closest('#demo-wali');
-    if (b.dataset.pay === 'pay') { s.pay.alya = 'paid'; $('pay-toast').textContent = 'Bunda Rina membayar di Classping. Status langsung Lunas, tanpa perlu cek bukti transfer. Laporan harian ada di menu Laporan Aktivitas.'; if (!fromWali) { s.flash = 'pay'; setTab('spp'); } render(); return; }
-    if (b.dataset.pay === 'remind') {
-      var kid = b.dataset.kid;
-      s.pay[kid] = 'reminded';
-      if (kid === 'alya') { s.flash = 'pay'; $('pay-toast').textContent = 'Pengingat terkirim secara pribadi ke Bunda Rina. Lihat HP-nya.'; }
-      else $('pay-toast').textContent = 'Pengingat terkirim secara pribadi ke wali ' + KIDS.filter(function (k) { return k.id === kid; })[0].name + '.';
-    }
-    else if (b.dataset.sub) { s.sub = b.dataset.sub; }
-    else if (b.id === 'kid-open') { s.addingKid = true; $('kid-toast').textContent = ''; render(); $('kid-name').focus(); return; }
-    else if (b.id === 'kid-cancel') { s.addingKid = false; }
-    else if (b.id === 'kid-save') {
-      var name = $('kid-name').value.trim();
-      if (!name) { $('kid-toast').className = 'toast warn'; $('kid-toast').textContent = 'Isi nama lengkap siswa dulu.'; $('kid-name').focus(); return; }
-      var id = 'k' + KIDS.length, cls = $('kid-class').value;
-      var short = name.split(/\s+/).map(function (w) { return w.replace(/[^A-Za-zÀ-ÿ]/g, '').charAt(0); }).join('').slice(0, 2).toUpperCase() || '?';
-      KIDS = KIDS.concat([{ id: id, name: name, short: short, cls: cls, av: 'av-mint', nis: 26001 + KIDS.length }]);
-      s.pay[id] = 'due'; s.tags[id] = false;
-      s.addingKid = false; s.kidAdded = true; s.newRow = id; $('kid-name').value = '';
-      $('kid-toast').className = 'toast';
-      $('kid-toast').textContent = name + ' tersimpan di Kelas ' + cls.split(' · ')[1] + ', dan langsung muncul di menu Pembayaran dan Laporan Aktivitas.';
-    }
-    else if (b.id === 'fee-open') { s.addingFee = true; $('fee-toast').textContent = ''; render(); $('fee-name').focus(); return; }
-    else if (b.id === 'fee-cancel') { s.addingFee = false; }
-    else if (b.id === 'fee-save') {
-      var fname = $('fee-name').value.trim(), amt = parseInt($('fee-amt').value, 10);
-      if (!fname || !(amt > 0)) { $('fee-toast').className = 'toast warn'; $('fee-toast').textContent = 'Isi nama biaya dan jumlahnya.'; return; }
-      s.fees = s.fees.concat([{ name: fname, amt: amt, rec: $('fee-rec').value }]);
-      s.addingFee = false; s.feeAdded = true; s.newRow = 'fee' + (s.fees.length - 1);
-      $('fee-name').value = ''; $('fee-amt').value = '';
-      $('fee-toast').className = 'toast';
-      $('fee-toast').textContent = '"' + fname + '" siap ditagihkan, misalnya ke satu kelas sekaligus.';
-    }
-    else if (b.dataset.pay === 'upload') { s.pay.alya = 'proof'; $('pay-toast').textContent = 'Bukti bayar dari Bunda Rina masuk. Klik "Konfirmasi lunas".'; if (!fromWali) { s.flash = 'pay'; setTab('spp'); } }
-    else if (b.dataset.pay === 'confirm') {
-      s.pay[b.dataset.kid] = 'paid';
-      if (b.dataset.kid === 'alya') { s.flash = 'pay'; $('pay-toast').textContent = 'Lunas. Bunda Rina langsung menerima ucapan terima kasih. Laporan harian ada di menu Laporan Aktivitas.'; }
-      else $('pay-toast').textContent = 'SPP Raka dikonfirmasi lunas.';
-    }
-    else if (b.dataset.act) { s.act = b.dataset.act; s.actTouched = true; $('act-toast').textContent = ''; }
-    else if (b.dataset.tag) { s.tags[b.dataset.tag] = !s.tags[b.dataset.tag]; s.actTouched = s.tagTouched = true; }
-    else if (b.id === 'post-btn') {
-      var n = KIDS.filter(function (k) { return s.tags[k.id]; }).length;
-      if (!n) { $('act-toast').className = 'toast warn'; $('act-toast').textContent = 'Tandai minimal satu anak.'; return; }
-      var a = ACTS.filter(function (x) { return x.id === s.act; })[0];
-      s.posted.push({ a: a, alya: !!s.tags.alya });
-      if (s.tags.alya) { s.flash = 'act'; $('act-toast').className = 'toast'; $('act-toast').textContent = 'Terkirim ke ' + n + ' keluarga, termasuk Bunda Rina.'; }
-      else { $('act-toast').className = 'toast warn'; $('act-toast').textContent = 'Terkirim ke ' + n + ' keluarga. Bunda Rina tidak menerimanya karena Alya tidak ditandai.'; }
-    }
-    else if (b.id === 'reset') { fresh(); ['pay-toast', 'act-toast', 'kid-toast', 'fee-toast'].forEach(function (t) { $(t).textContent = ''; }); setTab(tab); }
-    else return;
-    render();
-  });
-
-  // ---- Portal Wali Murid: its own slider, fed by the same state as the school simulation ----
-  var G_ORDER = ['akt', 'spp', 'profil', 'atur'];
-  var G_NAME = { akt: 'Aktivitas Alya', spp: 'SPP & Tagihan', profil: 'Profil Sekolah', atur: 'Pengaturan' };
-  var G_DESC = {
-    akt: 'Foto dan cerita kegiatan dari guru, hanya untuk anak Anda.',
-    spp: 'Lihat tagihan dan bayar langsung, atau unggah bukti bayar.',
-    profil: 'Informasi sekolah dan wali kelas anak.',
-    atur: 'Akun wali dan anak yang terhubung.'
-  };
-  var G_BASE = [
-    { when: 'Senin, 19 Okt 2026 · 09.00', a: { cat: 'Seni', title: 'Melukis dengan jari', text: 'Alya belajar mencampur warna primer jadi warna baru.', ph: 'ph-peony', il: 'paint' }, note: 'Alya bangga menunjukkan warna oranye buatannya!' },
-    { when: 'Jumat, 16 Okt 2026 · 10.00', a: { cat: 'Literasi', title: 'Mengenal huruf A', text: 'Anak-anak menebak benda yang namanya berawalan huruf A.', ph: 'ph-mint', il: 'book' } }
-  ];
-  var gTab = 'akt';
-  $('g-dots').innerHTML = G_ORDER.map(function (k) { return '<button type="button" data-gtab="' + k + '">' + G_NAME[k] + '</button>'; }).join('');
-
-  function renderGuardian() {
-    var q = $('g-q').value.trim().toLowerCase();
-    var posted = s.posted.filter(function (p) { return p.alya; }).slice().reverse().map(function (p) {
-      return { when: 'Hari ini · ' + p.a.time, a: p.a, isNew: true };
-    });
-    var items = posted.concat(G_BASE).filter(function (it) { return !q || (it.a.title + ' ' + it.a.text + ' ' + it.a.cat).toLowerCase().indexOf(q) > -1; });
-    $('g-feed').innerHTML = items.length ? items.map(function (it) {
-      return '<article class="g-card' + (it.isNew ? ' is-new' : '') + '"><div class="g-card-head"><span class="who"><span class="avatar">BS</span><span><strong>Bu Sari</strong><small>Kelas A1 · Matahari · ' + it.when + '</small></span></span><span class="g-tag">✓ Alya ditandai</span></div>'
-        + '<div class="photo ' + it.a.ph + '">' + art(it.a.il) + '</div>'
-        + '<div class="g-card-body"><span class="p-label" style="letter-spacing:.04em">' + it.a.cat + '</span><h4>' + it.a.title + '</h4><p>' + it.a.text + '</p>' + (it.note ? '<div class="note"><b>Catatan guru:</b> ' + it.note + '</div>' : '') + '</div></article>';
-    }).join('') : '<p class="g-empty">Tidak ada aktivitas yang cocok dengan "' + esc(q) + '".</p>';
-
-    // Bills: only SPP Oktober follows the simulation; the rest are fixed examples
-    var st = s.pay.alya;
-    var arrow = '<span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
-    var payBtn = mode === 'auto'
-      ? '<button type="button" class="btn btn-sm btn-primary" data-pay="pay">Bayar</button>'
-      : '<button type="button" class="btn btn-sm btn-primary" data-pay="upload">Unggah bukti</button>';
-    var bills = [
-      { name: 'SPP Oktober', code: 'TG-1024', amt: 250000, due: '10 Oktober 2026', st: st, act: st === 'due' || st === 'reminded' ? payBtn : arrow },
-      { name: 'Seragam', code: 'TG-1031', amt: 300000, due: '3 Desember 2026', st: 'due', act: arrow },
-      { name: 'Wisata kebun binatang', code: 'TG-1019', amt: 150000, due: '14 Oktober 2026', st: 'paid', act: arrow },
-      { name: 'SPP September', code: 'TG-0924', amt: 250000, due: '10 September 2026', st: 'paid', act: arrow }
-    ];
-    var BADGE = { due: ['Belum dibayar', 'b-due'], reminded: ['Diingatkan', 'b-remind'], proof: ['Menunggu konfirmasi', 'b-proof'], paid: ['Lunas', 'b-paid'] };
-    var bq = $('g-bq').value.trim().toLowerCase(), bs = $('g-bs').value;
-    var shown = bills.filter(function (r) {
-      var matchQ = !bq || (r.name + ' ' + r.code).toLowerCase().indexOf(bq) > -1;
-      var matchS = !bs || (bs === 'paid' ? r.st === 'paid' : r.st !== 'paid');
-      return matchQ && matchS;
-    });
-    $('g-bills').innerHTML = shown.length ? shown.map(function (r) {
-      return '<div class="g-tr" role="row"><span role="cell"><strong>' + r.name + '</strong></span><span role="cell">' + rupiah(r.amt) + '</span><span role="cell">' + r.due + '</span><span role="cell"><span class="badge ' + BADGE[r.st][1] + '">' + BADGE[r.st][0] + '</span></span><span role="cell">' + r.act + '</span></div>';
-    }).join('') : '<p class="g-empty" style="margin:12px">Tidak ada tagihan yang cocok.</p>';
-
-    $('gw-rows').innerHTML = s.walis.map(function (w) {
-      return '<div class="lrow"><span class="stu"><span class="avatar av-peony">' + esc(w.name.charAt(0).toUpperCase()) + '</span><span><strong>' + esc(w.name) + (w.you ? ' (Anda)' : '') + '</strong><small>' + w.rel + (w.email ? ' · ' + esc(w.email) : '') + '</small></span></span><span class="badge ' + (w.you ? 'b-paid">Aktif' : 'b-due">Undangan terkirim') + '</span></div>';
-    }).join('');
-    $('gw-form').hidden = !s.addingWali;
-    $('gw-open').hidden = s.addingWali;
-  }
-
-  function fitGHeight() { $('g-main').style.height = $('g-' + gTab).offsetHeight + 'px'; }
-
-  function setGTab(t) {
-    gTab = t;
-    var i = G_ORDER.indexOf(t);
-    document.querySelectorAll('[data-gtab]').forEach(function (btn) {
-      var on = btn.dataset.gtab === t;
-      if (btn.parentNode.id === 'g-dots') btn.setAttribute('aria-current', on);
-      else if (on) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
-    });
-    G_ORDER.forEach(function (k, j) {
-      var pane = $('g-' + k);
-      pane.style.order = j;
-      pane.inert = k !== t;
-      pane.setAttribute('aria-hidden', k !== t);
-    });
-    $('g-track').style.transform = 'translateX(' + (-i * 100) + '%)';
-    $('g-count').textContent = 'Menu ' + (i + 1) + ' dari ' + G_ORDER.length;
-    $('g-title').textContent = G_NAME[t];
-    $('g-desc').textContent = G_DESC[t];
-    fitGHeight();
-  }
-
-  function gSlide(dir) { setGTab(G_ORDER[(G_ORDER.indexOf(gTab) + dir + G_ORDER.length) % G_ORDER.length]); }
-
-  if (window.ResizeObserver) {
-    var gro = new ResizeObserver(fitGHeight);
-    G_ORDER.forEach(function (k) { gro.observe($('g-' + k)); });
-  }
-  var gStartX = null, gStartY = 0;
-  $('g-main').addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') { gStartX = e.clientX; gStartY = e.clientY; } });
-  $('g-main').addEventListener('pointerup', function (e) {
-    if (gStartX === null) return;
-    var dx = e.clientX - gStartX, dy = e.clientY - gStartY;
-    gStartX = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) gSlide(dx < 0 ? 1 : -1);
-  });
-  $('g-q').addEventListener('input', renderGuardian);
-  $('g-bq').addEventListener('input', renderGuardian);
-  $('g-bs').addEventListener('change', renderGuardian);
-
-  fresh();
-  render();
-  setTab('siswa');
-  setGTab('akt');
-
-  // In-page links: scroll in JS so they also work in previews and below the sticky header
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    var target = document.getElementById(a.getAttribute('href').slice(1));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (a.hasAttribute('data-focus-form')) setTimeout(function () { $('f-name').focus({ preventScroll: true }); }, 500);
-    try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
-  });
-
-  // Close the login menu when clicking elsewhere
-  document.addEventListener('click', function (e) {
-    var d = document.querySelector('.login');
-    if (d.open && !d.contains(e.target)) d.open = false;
-  });
-
-  // Contact form (FormSubmit, same endpoint as the live site)
-  document.addEventListener('submit', function (ev) {
-    var form = ev.target.closest('[data-contact-form]');
-    if (!form) return;
-    ev.preventDefault();
-    var status = form.querySelector('.status'), button = form.querySelector('button[type="submit"]');
-    if (!form.checkValidity()) { status.textContent = 'Mohon isi nama, email yang valid, dan pesan.'; form.reportValidity(); return; }
-    var payload = {};
-    new FormData(form).forEach(function (v, k) { payload[k] = v; });
-    payload._replyto = payload.email;
-    status.textContent = 'Mengirim…';
-    button.disabled = true;
-    fetch('https://formsubmit.co/ajax/the.class.ping@gmail.com', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload)
-    }).then(function (r) { return r.ok ? r.json() : Promise.reject(r); })
-      .then(function () { status.textContent = 'Terima kasih! Pesan Anda sudah terkirim — kami akan membalas lewat email.'; form.reset(); })
-      .catch(function () { status.textContent = 'Maaf, pesan gagal terkirim. Silakan coba lagi atau hubungi kami lewat WhatsApp.'; })
-      .then(function () { button.disabled = false; });
-  });
-})();
-</script>
+<a class="wa-float" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l-4 3 1.5-6A8.5 8.5 0 1 1 21 11.5Z"/></svg>Tanya lewat WhatsApp</a>
+<nav class="mobile-actions" aria-label="Hubungi Classping"><a class="btn" href="#naik-level">Lihat harga</a><a class="btn btn-primary btn-wa" href="https://wa.me/6281284335232?text=Halo%2C%20Classping%21%20Saya%20ingin%20mengetahui%20lebih%20banyak%20tentang%20Sekolah%20naik%20level%20%3A%29" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H5l-4 3 1.5-6A8.5 8.5 0 1 1 21 11.5Z"/></svg>Chat WhatsApp</a></nav>
+<dialog class="screenshot-dialog" id="screenshot-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title">Tampilan portal Classping</h2><button class="dialog-close" id="dialog-close" type="button" aria-label="Tutup screenshot">×</button></div><img class="dialog-image" id="dialog-image" alt=""></dialog>
 </body>
 </html>
